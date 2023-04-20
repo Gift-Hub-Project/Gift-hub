@@ -62,9 +62,9 @@ const createInitialUsers = async () => {
   console.log("STARTING TO CREATE USERS...")
   try {
     const usersToCreate = [
-      { username: "mike", password: "mike22"},
-      { username: "alice", password: "alicat7"},
-      { username: "bob", password: "bobert007"},
+      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com" },
+      { username: "alice", password: "alicat7", address: "wonderland", email: "alice@wonderland.com" },
+      { username: "bob", password: "bobert007", address: "County lock up", email: "bob@cell4.com" },
     ]
     const users = await Promise.all(usersToCreate.map(createUser))
 
@@ -84,10 +84,17 @@ const rebuildTables = async() =>{
 	console.log('BUILDING TABLES');
 	await createTables();
 	console.log('FINISHED BUILDING TABLES');
+  
 };
 
 const rebuildDb = async() =>{
+  try {
+    await testDb();
+  await rebuildTables();
   await createInitialUsers();
+  } catch(err){
+    console.log(err);
+  }
 }
 
 const testDb = async () =>{
@@ -96,11 +103,12 @@ const testDb = async () =>{
   console.log("FINISHED CONNECTING");
 };
 
-testDb();
+
 
 module.exports = {
   rebuildTables,
   dropTables,
   createTables,
+  createInitialUsers,
   rebuildDb
 }

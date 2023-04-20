@@ -1,6 +1,6 @@
 const Client = require('./client');
-const { rebuildTables, dropTables, createTables} = require('./seedData');
+const { rebuildTables, dropTables, createTables, rebuildDb} = require('./seedData');
 
-rebuildTables()
+rebuildDb()
   .catch(console.error)
   .finally(() => Client.end());
