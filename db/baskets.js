@@ -2,7 +2,7 @@ const client = require ('./client.js');
 
 const createBasket = async({name, description, occasionId,  quantity, price}) =>{
     try{
-        const { rows: [baskets]} = await client.query(`
+        const { rows: [ baskets ]} = await client.query(`
         INSERT INTO baskets(name, description, "occasionId", quantity, price)
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *;
@@ -28,7 +28,7 @@ const getAllBaskets = async(id) =>{
     }
 };
 
-const getBasketsById = async(id) =>{
+const getBasketById = async(id) =>{
     try{
         const { rows:[ baskets ]} = await client.query(`
             SELECT *
@@ -42,9 +42,9 @@ const getBasketsById = async(id) =>{
     }
 };
 
-const getBasketsByName = async(name) =>{
+const getBasketByName = async(name) =>{
     try{
-        const { rows:[baskets] } = await client.query(`
+        const { rows:[ baskets ] } = await client.query(`
             SELECT *
             FROM baskets
             WHERE name = ${name}
@@ -98,13 +98,13 @@ const updateBasket = async({id, ...fields}) => {
     return
  }
      try{
-        const { rows: [ basket ]} = await client.query(`
+        const { rows: [ baskets ]} = await client.query(`
             UPDATE baskets
             SET ${setString}
             WHERE id = ${id}
             RETURNING *;
         `, Object.values(fields));
-        return basket;
+        return baskets;
     } catch (error) {
         console.error(error);
         throw error;
@@ -126,10 +126,10 @@ const destroyBasket = async(id) => {
 };
 
 module.exports = {
-    createBaskets,
+    createBasket,
     getAllBaskets,
-    getBasketsById,
-    getBasketsByName,
+    getBasketById,
+    getBasketByName,
     getBasketsByOccasionId,
     attachBasketsToOccasions,
     updateBasket,
