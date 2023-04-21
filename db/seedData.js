@@ -1,5 +1,6 @@
 const client = require('./client');
 const { createUser } = require('./users');
+const { createOccasion, getOccasionByName } = require('./occasions');
 
 const dropTables = async () => {
   try {
@@ -46,7 +47,7 @@ const createTables = async () => {
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         description VARCHAR(255) NOT NULL,
-        "occasionsId" INTEGER REFERENCES occasions(id),
+        "occasionId" INTEGER REFERENCES occasions(id),
         quantity INTEGER DEFAULT '0',
         price FLOAT
         );
@@ -68,14 +69,17 @@ const createInitialUsers = async () => {
     ]
     const users = await Promise.all(usersToCreate.map(createUser))
 
+
+
     console.log("Users created:")
     console.log(users)
     console.log("Finished creating users!")
-  } catch(err) {
+  } catch (err) {
     console.error("ERROR CREATING USERS!")
     throw err;
   }
 }
+
 
 const createInitialCart = async () => {
   console.log("STARTING TO CREATE CART...")
@@ -110,10 +114,11 @@ const createOccasions = async () => {
     console.log(occasion)
     console.log("Finished creating Occasion!")
   } catch(err) {
-    console.error("ERROR CREATING OCCASION!")
+    console.error("ERROR CREATING OCCASION!");
     throw err;
   }
 }
+
 
 const createBaskets = async () => {
   console.log("STARTING TO CREATE BASKETS...")
@@ -134,17 +139,16 @@ const createBaskets = async () => {
   }
 }
 
-const rebuildTables = async() =>{
-	console.log("DROPPING TABLES");
-	await dropTables();
-	console.log('FINISHED DROPPING TABLES');
-	console.log('BUILDING TABLES');
-	await createTables();
-	console.log('FINISHED BUILDING TABLES');
-  
+const rebuildTables = async () => {
+  console.log("DROPPING TABLES");
+  await dropTables();
+  console.log('FINISHED DROPPING TABLES');
+  console.log('BUILDING TABLES');
+  await createTables();
+  console.log('FINISHED BUILDING TABLES');
 };
 
-const rebuildDb = async() =>{
+const rebuildDb = async () => {
   try {
     await testDb();
   await rebuildTables();
@@ -159,7 +163,7 @@ const rebuildDb = async() =>{
 
 
 
-const testDb = async () =>{
+const testDb = async () => {
   console.log("CONNECTING TO DB...");
   client.connect();
   console.log("FINISHED CONNECTING");
