@@ -1,5 +1,6 @@
 const client = require('./client');
 const { createUser } = require('./users');
+const { createOccasion, getOccasionByName } = require('./occasions');
 
 const dropTables = async () => {
   try {
@@ -68,36 +69,59 @@ const createInitialUsers = async () => {
     ]
     const users = await Promise.all(usersToCreate.map(createUser))
 
+
+
     console.log("Users created:")
     console.log(users)
     console.log("Finished creating users!")
-  } catch(err) {
+  } catch (err) {
     console.error("ERROR CREATING USERS!")
     throw err;
   }
 }
 
-const rebuildTables = async() =>{
-	console.log("DROPPING TABLES");
-	await dropTables();
-	console.log('FINISHED DROPPING TABLES');
-	console.log('BUILDING TABLES');
-	await createTables();
-	console.log('FINISHED BUILDING TABLES');
-  
+const createInitialOccasions = async () => {
+  console.log("STARTING TO CREATE OCCASSIONS...");
+  try {
+
+    const occasionToCreate = [
+      { name: "mom", categories: "wine" },
+      { name: "wedding", categories: "champagne" },
+      { name: "corporate", categories: "coffee" }
+    ]
+    const occasion = await Promise.all(occasionToCreate.map(createOccasion))
+
+    console.log("Occasions created:");
+    console.log(occasion);
+    console.log("Finished creating occasions!");
+  } catch (err) {
+    console.error("ERROR CREATING OCCASIONS")
+    throw err;
+  }
+}
+
+const rebuildTables = async () => {
+  console.log("DROPPING TABLES");
+  await dropTables();
+  console.log('FINISHED DROPPING TABLES');
+  console.log('BUILDING TABLES');
+  await createTables();
+  console.log('FINISHED BUILDING TABLES');
+
 };
 
-const rebuildDb = async() =>{
+const rebuildDb = async () => {
   try {
     await testDb();
-  await rebuildTables();
-  await createInitialUsers();
-  } catch(err){
+    await rebuildTables();
+    await createInitialUsers();
+    await createInitialOccasions();
+  } catch (err) {
     console.log(err);
   }
 }
 
-const testDb = async () =>{
+const testDb = async () => {
   console.log("CONNECTING TO DB...");
   client.connect();
   console.log("FINISHED CONNECTING");
@@ -110,5 +134,6 @@ module.exports = {
   dropTables,
   createTables,
   createInitialUsers,
+  createInitialOccasions,
   rebuildDb
 }
