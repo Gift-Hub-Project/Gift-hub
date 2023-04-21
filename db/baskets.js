@@ -49,7 +49,7 @@ const getBasketsByName = async(name) =>{
             FROM baskets
             WHERE name = ${name}
         `);
-        return name;
+        return baskets;
     } catch(error){
         console.error(error);
         throw error;
@@ -58,18 +58,13 @@ const getBasketsByName = async(name) =>{
 
 const getBasketsByOccasionId = async({id}) =>{
     try{
-        const allBaskets = await getAllBaskets();
-        const basketsByOccasionId = allBaskets.filter(basket=> {
-            let connectedToOccasion = false;
-            for( let i= 0; i<basket.occasions.length; i++) {
-                if (basket.occasions[i].id === id) {
-                    connectedToOccasion = true;
-                    break;
-                }
-            }
-            return connectedToOccasion;
-        })
-        return basketsByOccasionId
+        const { rows } = await client.query(`
+            SELECT baskets.*, occasions.name, occasions.categories
+            FROM occasions
+            JOIN baskets
+                ON occasions."basketId" = baskets.id
+            WHERE occasions."occasionId" = $1
+        `, [id]);
     } catch(error){
         console.error(error);
         throw error;
@@ -79,7 +74,7 @@ const getBasketsByOccasionId = async({id}) =>{
 const attachBasketsToOccasions = async (occasions) => {
     try {
         for (let i = 0; i< occasions.length; i++){
-            const {rows: baskets} = await client.quert(`
+            const {rows: baskets} = await client.query(`
                 SELECT baskets.*, occasions.name, occasions.categories
                 FROM occasions
                 JOIN baskets
@@ -88,7 +83,7 @@ const attachBasketsToOccasions = async (occasions) => {
             `)
             occasions[i].baskets = baskets;
         } 
-    } catch{
+    } catch (error){
         console.error(error);
         throw error
     }
@@ -108,7 +103,7 @@ const updateBasket = async({id, ...fields}) => {
             SET ${setString}
             WHERE id = ${id}
             RETURNING *;
-        `, OBJECT.values(fields));
+        `, Object.values(fields));
         return basket;
     } catch (error) {
         console.error(error);
@@ -120,7 +115,7 @@ const destroyBasket = async(id) => {
     try{
         await client.query(`
             DELETE FROM baskets
-            WHERE ""basketId" = ${id}
+            WHERE "basketId" = ${id}
             RETURNING *
         `)
         return id;
@@ -131,6 +126,7 @@ const destroyBasket = async(id) => {
 };
 
 module.exports = {
+    createBaskets,
     getAllBaskets,
     getBasketsById,
     getBasketsByName,
