@@ -47,7 +47,7 @@ const createTables = async () => {
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         description VARCHAR(255) NOT NULL,
-        "occasionsId" INTEGER REFERENCES occasions(id),
+        "occasionId" INTEGER REFERENCES occasions(id),
         quantity INTEGER DEFAULT '0',
         price FLOAT
         );
