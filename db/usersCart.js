@@ -11,6 +11,7 @@ const addToUserCart = async (
     const { rows: [ usersCart ] } = await client.query(`
     INSERT INTO cart(items, "numberOfItems", "isLoggedIn", "userId", "isPurchased")
     VALUES($1, $2, $3, $4, $5)
+
     RETURNING *;
     `, [items, numberOfItems, isLoggedIn, userId, isPurchased ]);
 
