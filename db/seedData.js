@@ -9,9 +9,9 @@ const dropTables = async () => {
   try {
     console.log("DROPPING ALL TABLES...")
     await client.query(`
+  DROP TABLE IF EXISTS cart;
   DROP TABLE IF EXISTS baskets;
   DROP TABLE IF EXISTS occasions;
-  DROP TABLE IF EXISTS cart;
   DROP TABLE IF EXISTS users;
   `); console.log("FINISHED DROPPING TABLES")
   } catch (err) {
@@ -33,14 +33,6 @@ const createTables = async () => {
         address VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL
        );
-      CREATE TABLE cart (
-        id SERIAL PRIMARY KEY,
-        items VARCHAR(255),
-        "numberOfItems" INTEGER DEFAULT '0',
-        "isLoggedIn" BOOLEAN DEFAULT false,
-        "userId" INTEGER REFERENCES users(id),
-        "isPurchased" BOOLEAN DEFAULT false
-        );
       CREATE TABLE occasions (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255),
@@ -54,6 +46,14 @@ const createTables = async () => {
         quantity INTEGER DEFAULT '0',
         price FLOAT
         );
+        CREATE TABLE cart (
+          id SERIAL PRIMARY KEY,
+          items INTEGER REFERENCES baskets(id),
+          "numberOfItems" INTEGER DEFAULT 0,
+          "isLoggedIn" BOOLEAN DEFAULT false,
+          "userId" INTEGER REFERENCES users(id),
+          "isPurchased" BOOLEAN DEFAULT false
+          );
       `);
     console.log("FINISHED MAKING TABLES!")
   } catch (err) {
@@ -87,12 +87,20 @@ const createInitialUsers = async () => {
 const createInitialCart = async () => {
   console.log("STARTING TO CREATE CART...")
   try {
-    const CartToCreate = [
-      { items: "1", numberOfItems: "1", isLoggedIn: true, userId: "1", isPurchased: false },
-      { items: "2", numberOfItems: "2", isLoggedIn: true, userId: "2", isPurchased: false },
-      { items: "3", numberOfItems: "3", isLoggedIn: true, userId: "3", isPurchased: false },
+    const cartToCreate = [
+      { items: 1, numberOfItems: 1, isLoggedIn: true, userId: 1, isPurchased: false },
+      { items: 2, numberOfItems: 2, isLoggedIn: true, userId: 2, isPurchased: false },
+      { items: 3, numberOfItems: 3, isLoggedIn: true, userId: 3, isPurchased: false },
     ]
-    const cart = await Promise.all(CartToCreate.map(addToUserCart))
+    const cart = await Promise.all(cartToCreate.map( (value) => {
+
+      addToUserCart(value.items,
+        value.numberOfItems,
+        value.isLoggedIn,
+        value.userId,
+        value.isPurchased
+        )
+    }))
 
     console.log("Cart created:")
     console.log(cart)
@@ -111,7 +119,7 @@ const createOccasions = async () => {
       { name: "For Mom", categories: ["grilling", "golfing", "self-care", "bourban", "sports"]  },
       { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
     ]
-    const cart = await Promise.all(OccasionToCreate.map(createOccasion))
+    const occasion = await Promise.all(OccasionToCreate.map(createOccasion))
 
     console.log("Occasion created:")
     console.log(occasion)
@@ -127,9 +135,9 @@ const createBaskets = async () => {
   console.log("STARTING TO CREATE BASKETS...")
   try {
     const basketsToCreate = [
-      { name: "Gardening Basket", description: "a basket to fulfill all of your moms gardening dreams", price: "50" },
-      { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", price: "60"  },
-      { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", price: "75"  },
+      { name: "Gardening Basket", description: "a basket to fulfill all of your moms gardening dreams", occasionId: 1, quantity: 1, price: 50 },
+      { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", occasionId: 1, quantity: 1, price: 60  },
+      { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", occasionId: 1, quantity: 1, price: 75  },
     ]
     const basket = await Promise.all(basketsToCreate.map(createBasket))
 
@@ -156,9 +164,9 @@ const rebuildDb = async () => {
     await testDb();
   await rebuildTables();
   await createInitialUsers();
-  await createInitialCart();
   await createOccasions();
-  await createBaskets()
+  await createBaskets();
+  await createInitialCart();
   } catch(err){
     console.log(err);
   }

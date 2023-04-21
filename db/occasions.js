@@ -23,7 +23,6 @@ const getOccasionById = async (id) => {
       SELECT * FROM occasions
       WHERE id=$1;
      `, [id])
-        console.log('..........occasion', occasion, 'id:', id);
         return occasion
     } catch (err) {
         console.log(err);
