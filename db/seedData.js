@@ -104,7 +104,7 @@ const createOccasions = async () => {
       { name: "For Mom", categories: ["grilling", "golfing", "self-care", "bourban", "sports"]  },
       { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
     ]
-    const cart = await Promise.all(OccasionToCreate.map(createOccasion))
+    const cart = await Promise.all(OccasionToCreate.map(createCart))
 
     console.log("Occasion created:")
     console.log(occasion)
