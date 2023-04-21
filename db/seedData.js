@@ -1,6 +1,7 @@
 const client = require('./client');
 const { createUser } = require('./users');
-const { createOccasion, getOccasionByName } = require('./occasions');
+const { createOccasion } = require('./occasions');
+
 
 const dropTables = async () => {
   try {
@@ -85,11 +86,11 @@ const createInitialCart = async () => {
   console.log("STARTING TO CREATE CART...")
   try {
     const CartToCreate = [
-      { items: "1", quantity: "1", userId: "1", isPurchased: false },
-      { items: "2", quantity: "2", userId: "2", isPurchased: false },
-      { items: "3", quantity: "3", userId: "3", isPurchased: false },
+      { items: "1", numberOfItems: "1", isLoggedIn: true, userId: "1", isPurchased: false },
+      { items: "2", numberOfItems: "2", isLoggedIn: true, userId: "2", isPurchased: false },
+      { items: "3", numberOfItems: "3", isLoggedIn: true, userId: "3", isPurchased: false },
     ]
-    const cart = await Promise.all(CartToCreate.map(createCart))
+    const cart = await Promise.all(CartToCreate.map(addToUserCart))
 
     console.log("Cart created:")
     console.log(cart)
@@ -108,7 +109,7 @@ const createOccasions = async () => {
       { name: "For Mom", categories: ["grilling", "golfing", "self-care", "bourban", "sports"]  },
       { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
     ]
-    const cart = await Promise.all(OccasionToCreate.map(createCart))
+    const cart = await Promise.all(OccasionToCreate.map(createOccasion))
 
     console.log("Occasion created:")
     console.log(occasion)

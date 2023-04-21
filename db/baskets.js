@@ -1,6 +1,6 @@
 const client = require ('./client.js');
 
-const createBaskets = async({name, description, occasionId,  quantity, price}) =>{
+const createBasket = async({name, description, occasionId,  quantity, price}) =>{
     try{
         const { rows: [baskets]} = await client.query(`
         INSERT INTO baskets(name, description, "occasionId", quantity, price)
