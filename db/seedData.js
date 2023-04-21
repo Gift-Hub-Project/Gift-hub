@@ -123,10 +123,10 @@ const createBaskets = async () => {
       { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", price: "60"  },
       { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", price: "75"  },
     ]
-    const cart = await Promise.all(basketsToCreate.map(createBasket))
+    const basket = await Promise.all(basketsToCreate.map(createBasket))
 
     console.log("Basket created:")
-    console.log(occasion)
+    console.log(basket);
     console.log("Finished creating Basket!")
   } catch(err) {
     console.error("ERROR CREATING BASKET!")
