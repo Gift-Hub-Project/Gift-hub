@@ -80,22 +80,61 @@ const createInitialUsers = async () => {
   }
 }
 
-const createInitialOccasions = async () => {
-  console.log("STARTING TO CREATE OCCASSIONS...");
+
+const createInitialCart = async () => {
+  console.log("STARTING TO CREATE CART...")
   try {
-
-    const occasionToCreate = [
-      { name: "mom", categories: "wine" },
-      { name: "wedding", categories: "champagne" },
-      { name: "corporate", categories: "coffee" }
+    const CartToCreate = [
+      { items: "1", quantity: "1", userId: "1", isPurchased: false },
+      { items: "2", quantity: "2", userId: "2", isPurchased: false },
+      { items: "3", quantity: "3", userId: "3", isPurchased: false },
     ]
-    const occasion = await Promise.all(occasionToCreate.map(createOccasion))
+    const cart = await Promise.all(CartToCreate.map(createCart))
 
-    console.log("Occasions created:");
-    console.log(occasion);
-    console.log("Finished creating occasions!");
-  } catch (err) {
-    console.error("ERROR CREATING OCCASIONS")
+    console.log("Cart created:")
+    console.log(cart)
+    console.log("Finished creating Cart!")
+  } catch(err) {
+    console.error("ERROR CREATING CART!")
+    throw err;
+  }
+}
+
+const createOccasions = async () => {
+  console.log("STARTING TO CREATE CART...")
+  try {
+    const OccasionToCreate = [
+      { name: "For Mom", categories: ["gardening", "cooking", "self-care", "shopping", "wine"]  },
+      { name: "For Mom", categories: ["grilling", "golfing", "self-care", "bourban", "sports"]  },
+      { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
+    ]
+    const cart = await Promise.all(OccasionToCreate.map(createCart))
+
+    console.log("Occasion created:")
+    console.log(occasion)
+    console.log("Finished creating Occasion!")
+  } catch(err) {
+    console.error("ERROR CREATING OCCASION!");
+    throw err;
+  }
+}
+
+
+const createBaskets = async () => {
+  console.log("STARTING TO CREATE BASKETS...")
+  try {
+    const basketsToCreate = [
+      { name: "Gardening Basket", description: "a basket to fulfill all of your moms gardening dreams", price: "50" },
+      { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", price: "60"  },
+      { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", price: "75"  },
+    ]
+    const basket = await Promise.all(basketsToCreate.map(createBasket))
+
+    console.log("Basket created:")
+    console.log(basket);
+    console.log("Finished creating Basket!")
+  } catch(err) {
+    console.error("ERROR CREATING BASKET!")
     throw err;
   }
 }
@@ -107,19 +146,22 @@ const rebuildTables = async () => {
   console.log('BUILDING TABLES');
   await createTables();
   console.log('FINISHED BUILDING TABLES');
-
 };
 
 const rebuildDb = async () => {
   try {
     await testDb();
-    await rebuildTables();
-    await createInitialUsers();
-    await createInitialOccasions();
-  } catch (err) {
+  await rebuildTables();
+  await createInitialUsers();
+  await createInitialCart();
+  await createOccasions();
+  await createBaskets()
+  } catch(err){
     console.log(err);
   }
 }
+
+
 
 const testDb = async () => {
   console.log("CONNECTING TO DB...");
@@ -134,6 +176,8 @@ module.exports = {
   dropTables,
   createTables,
   createInitialUsers,
-  createInitialOccasions,
+  createInitialCart,
+  createOccasions,
+  createBaskets,
   rebuildDb
 }
