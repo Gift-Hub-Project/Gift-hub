@@ -36,7 +36,16 @@ const deleteFromUserCart = async () => {
 }
 
 const isLoggedIn = async () => {
-
+  try {
+    const {rows: [ usersCart ] } = await client.query(`
+    SELECT *
+    FROM users
+    WHERE "isLoggedIn" = true
+    `)
+  } catch (error){
+    console.error(err);
+    throw error;
+  }
 }
 
 module.exports = {
