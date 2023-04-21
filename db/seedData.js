@@ -77,6 +77,63 @@ const createInitialUsers = async () => {
   }
 }
 
+const createInitialCart = async () => {
+  console.log("STARTING TO CREATE CART...")
+  try {
+    const CartToCreate = [
+      { items: "1", quantity: "1", userId: "1", isPurchased: false },
+      { items: "2", quantity: "2", userId: "2", isPurchased: false },
+      { items: "3", quantity: "3", userId: "3", isPurchased: false },
+    ]
+    const cart = await Promise.all(CartToCreate.map(createCart))
+
+    console.log("Cart created:")
+    console.log(cart)
+    console.log("Finished creating Cart!")
+  } catch(err) {
+    console.error("ERROR CREATING CART!")
+    throw err;
+  }
+}
+
+const createOccasions = async () => {
+  console.log("STARTING TO CREATE CART...")
+  try {
+    const OccasionToCreate = [
+      { name: "For Mom", categories: ["gardening", "cooking", "self-care", "shopping", "wine"]  },
+      { name: "For Mom", categories: ["grilling", "golfing", "self-care", "bourban", "sports"]  },
+      { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
+    ]
+    const cart = await Promise.all(OccasionToCreate.map(createOccasion))
+
+    console.log("Occasion created:")
+    console.log(occasion)
+    console.log("Finished creating Occasion!")
+  } catch(err) {
+    console.error("ERROR CREATING OCCASION!")
+    throw err;
+  }
+}
+
+const createBaskets = async () => {
+  console.log("STARTING TO CREATE BASKETS...")
+  try {
+    const basketsToCreate = [
+      { name: "Gardening Basket", description: "a basket to fulfill all of your moms gardening dreams", price: "50" },
+      { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", price: "60"  },
+      { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", price: "75"  },
+    ]
+    const cart = await Promise.all(basketsToCreate.map(createBasket))
+
+    console.log("Basket created:")
+    console.log(occasion)
+    console.log("Finished creating Basket!")
+  } catch(err) {
+    console.error("ERROR CREATING BASKET!")
+    throw err;
+  }
+}
+
 const rebuildTables = async() =>{
 	console.log("DROPPING TABLES");
 	await dropTables();
@@ -92,10 +149,15 @@ const rebuildDb = async() =>{
     await testDb();
   await rebuildTables();
   await createInitialUsers();
+  await createInitialCart();
+  await createOccasions();
+  await createBaskets()
   } catch(err){
     console.log(err);
   }
 }
+
+
 
 const testDb = async () =>{
   console.log("CONNECTING TO DB...");
@@ -110,5 +172,8 @@ module.exports = {
   dropTables,
   createTables,
   createInitialUsers,
+  createInitialCart,
+  createOccasions,
+  createBaskets,
   rebuildDb
 }
