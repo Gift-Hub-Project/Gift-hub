@@ -71,23 +71,23 @@ const getBasketsByOccasionId = async({id}) =>{
     }
 };
 
-const attachBasketsToOccasions = async (occasions) => {
-    try {
-        for (let i = 0; i< occasions.length; i++){
-            const {rows: baskets} = await client.query(`
-                SELECT baskets.*, occasions.name, occasions.categories
-                FROM occasions
-                JOIN baskets
-                    ON occasions."basketId" = baskets.id
-                WHERE occasions."occasionId" = ${occasions[i].id}
-            `)
-            occasions[i].baskets = baskets;
-        } 
-    } catch (error){
-        console.error(error);
-        throw error
-    }
-};
+// const attachBasketsToOccasions = async (occasions) => {
+//     try {
+//         for (let i = 0; i< occasions.length; i++){
+//             const {rows: baskets} = await client.query(`
+//                 SELECT baskets.*, occasions.name, occasions.categories
+//                 FROM occasions
+//                 JOIN baskets
+//                     ON occasions."basketId" = baskets.id
+//                 WHERE occasions."occasionId" = ${occasions[i].id}
+//             `)
+//             occasions[i].baskets = baskets;
+//         } 
+//     } catch (error){
+//         console.error(error);
+//         throw error
+//     }
+// };
 
 const updateBasket = async({id, ...fields}) => {
     const setString = Object.keys(fields).map(
@@ -131,7 +131,7 @@ module.exports = {
     getBasketById,
     getBasketByName,
     getBasketsByOccasionId,
-    attachBasketsToOccasions,
+    // attachBasketsToOccasions,
     updateBasket,
     destroyBasket
 };

@@ -28,7 +28,9 @@ app.use((req, res, next) => {
     console.log("BODY LOGGER END");
 
     next();
-})
+});
+
+
 
 client.connect();
-module.exports = app;
+module.exports = {app, verifyAdminToken, secretKey};
