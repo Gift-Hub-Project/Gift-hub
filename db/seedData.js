@@ -22,6 +22,15 @@ const dropTables = async () => {
 const createTables = async () => {
   try {
     console.log("STARTING TO BUILD TABLES...")
+    // make sure our spacing below is consistent. Also we discussed this a bit last time, but we may have issues with adding more than one item to our cart with our current configuration
+    // through-table
+    // primarily it's "JOIN" table
+    // cart => id
+    // baskets => id
+    // cart_baskets
+    // id
+    // cartId
+    // basketsId
     await client.query(`
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
@@ -182,7 +191,7 @@ const testDb = async () => {
 
 
 
-module.exports = {
+module.exports = { // the only function we need to be exporting here is the rebuildDb function, as this is the only one we're using in a separate file
   rebuildTables,
   dropTables,
   createTables,

@@ -1,12 +1,12 @@
 const client = require('./client.js');
 
-
 const getOccasionByName = async ({ name }) => {
     try {
+        // all SQL statements end with a semi-colon
         const { rows: [occasion] } = await client.query(`
-    SELECT *
-    FROM occasions
-    WHERE name=$1
+        SELECT *
+        FROM occasions
+        WHERE name=$1
     `,[name])
         return occasion;
 
@@ -31,7 +31,7 @@ const getOccasionById = async (id) => {
 
 
 
-
+// It's a bit irregular to input an array into a psql database, however it will technically work and might be okay in this case?
 const createOccasion = async ({ name, categories }) => {
     if (!name) { return }
     try {

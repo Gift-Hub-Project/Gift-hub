@@ -14,7 +14,7 @@ const createBasket = async({name, description, occasionId,  quantity, price}) =>
         throw error;
     }
 };
-
+// id is unused, we can remove it
 const getAllBaskets = async(id) =>{
     try{
         const { rows } = await client.query(`
@@ -30,6 +30,7 @@ const getAllBaskets = async(id) =>{
 
 const getBasketById = async(id) =>{
     try{
+    // we should use a prepared statement here ($1) to avoid any security issues with SQL injection
         const { rows:[ baskets ]} = await client.query(`
             SELECT *
             FROM baskets
@@ -44,6 +45,7 @@ const getBasketById = async(id) =>{
 
 const getBasketByName = async(name) =>{
     try{
+    // we should use a reference here ($1) to avoid any security issues with SQL injection
         const { rows:[ baskets ] } = await client.query(`
             SELECT *
             FROM baskets
@@ -58,6 +60,7 @@ const getBasketByName = async(name) =>{
 
 const getBasketsByOccasionId = async({id}) =>{
     try{
+        // we have this statement a bit flipped around/backwards, remember that the INTEGER REFERENCE is in the baskets table (baskets."occasionId")
         const { rows } = await client.query(`
             SELECT baskets.*, occasions.name, occasions.categories
             FROM occasions
@@ -65,14 +68,17 @@ const getBasketsByOccasionId = async({id}) =>{
                 ON occasions."basketId" = baskets.id
             WHERE occasions."occasionId" = $1
         `, [id]);
+        // not returning any data
     } catch(error){
         console.error(error);
         throw error;
     }
 };
 
+// what is our goal with this function, what are we trying to accomplish?
 const attachBasketsToOccasions = async (occasions) => {
     try {
+    // we should use a reference here ($1) to avoid any security issues with SQL injection
         for (let i = 0; i< occasions.length; i++){
             const {rows: baskets} = await client.query(`
                 SELECT baskets.*, occasions.name, occasions.categories
@@ -83,6 +89,7 @@ const attachBasketsToOccasions = async (occasions) => {
             `)
             occasions[i].baskets = baskets;
         } 
+        // not returning any data
     } catch (error){
         console.error(error);
         throw error
@@ -113,6 +120,7 @@ const updateBasket = async({id, ...fields}) => {
 
 const destroyBasket = async(id) => {
     try{
+        // if we're just returning the id at the end of this statement (line 130), we don't need to return anything from our sql (line 128)
         await client.query(`
             DELETE FROM baskets
             WHERE "basketId" = ${id}

@@ -3,6 +3,7 @@ const bcrypt = require ('bcrypt');
 
 const getUser = async({username, password}) => {
   try{
+    // we should use a reference here ($1) to avoid any security issues with SQL injection
     const { rows: [ user ]} = await client.query(`
     SELECT *
     FROM users
@@ -21,6 +22,7 @@ const getUser = async({username, password}) => {
 
 const getUserById = async ( userId ) =>{
   try{
+    // we should use a reference here ($1) to avoid any security issues with SQL injection
     const { rows: [ user ] } = await client.query(`
     SELECT id, username
     FROM users
@@ -38,6 +40,7 @@ const getUserById = async ( userId ) =>{
 
 const getUsernameByUsername = async ( username ) => {
   try{
+    // we should use a reference here ($1) to avoid any security issues with SQL injection
     const { rows: [ user ] } = await client.query(`
     SELECT *
     FROM users
@@ -53,6 +56,7 @@ const getUsernameByUsername = async ( username ) => {
 const createUser = async ({ username, password, email, address} ) => {
   try{
     password = await bcrypt.hash(password, 10);
+    // format spacing { rows: [ user ] }
     const {rows: [ user ] } = await client.query(`
     INSERT INTO users(username, password, email, address)
     VALUES($1, $2, $3, $4)
@@ -60,7 +64,8 @@ const createUser = async ({ username, password, email, address} ) => {
     RETURNING *;
     `, [username, password
       , email, address ])
-
+      // our on conflict is working, however if we do run into a conflict here, "user" becomes undefined.
+      // this ultimately will cause a typeerror below when we try to delete the password
     delete user.password;
     return user;
   } catch (err) {

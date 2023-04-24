@@ -22,8 +22,9 @@ const addToUserCart = async (
   }
 }
 
-const deleteFromUserCart = async () => {
+const deleteFromUserCart = async () => { // formatting inside this function
  try {
+  // based on our naming convention, is this intended to delete a certain users cart? If so, currently this deletes every cart in our database that has an isPurchased to be true. It's fine to keep cart's that have isPurchased = true in general, as this let's us have an "order history"
   await client.query(`
   DELETE FROM cart WHERE "isPurchased" = true
   RETURNING *;
@@ -35,7 +36,7 @@ const deleteFromUserCart = async () => {
   throw err;
  }
 }
-
+// This doesn't interface with the cart table at all, so it feels as though it should exist in the users.js file instead
 const isLoggedIn = async () => {
   try {
     const {rows: [ usersCart ] } = await client.query(`
