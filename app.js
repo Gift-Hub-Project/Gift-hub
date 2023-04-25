@@ -33,4 +33,4 @@ app.use((req, res, next) => {
 
 
 client.connect();
-module.exports = {app, verifyAdminToken, secretKey};
+module.exports =  app;

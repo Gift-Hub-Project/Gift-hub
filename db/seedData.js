@@ -45,14 +45,14 @@ const createTables = async () => {
         quantity INTEGER DEFAULT '0',
         price FLOAT
         );
-        CREATE TABLE cart (
-          id SERIAL PRIMARY KEY,
-          items INTEGER REFERENCES baskets(id),
-          "numberOfItems" INTEGER DEFAULT 0,
-          "isLoggedIn" BOOLEAN DEFAULT false,
-          "userId" INTEGER REFERENCES users(id),
-          "isPurchased" BOOLEAN DEFAULT false
-          );
+      CREATE TABLE cart (
+        id SERIAL PRIMARY KEY,
+        items INTEGER REFERENCES baskets(id),
+        "numberOfItems" INTEGER DEFAULT 0,
+        "isLoggedIn" BOOLEAN DEFAULT false,
+        "userId" INTEGER REFERENCES users(id),
+        "isPurchased" BOOLEAN DEFAULT false
+        );
       `);
     console.log("FINISHED MAKING TABLES!")
   } catch (err) {
