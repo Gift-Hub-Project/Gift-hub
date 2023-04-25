@@ -11,7 +11,6 @@ const addToUserCart = async (
     const { rows: [ usersCart ] } = await client.query(`
     INSERT INTO cart(items, "numberOfItems", "isLoggedIn", "userId", "isPurchased")
     VALUES($1, $2, $3, $4, $5)
-
     RETURNING *;
     `, [items, numberOfItems, isLoggedIn, userId, isPurchased ]);
 
@@ -49,8 +48,63 @@ const isLoggedIn = async () => {
   }
 }
 
+const removeItemFromCart = async (id) => {
+
+  try{
+    const { rows: [ deletedItem ] } = await client.query(`
+    DELETE
+    FROM cart
+    WHERE id=$1;
+    `,[id])
+
+  } catch(error){
+    console.error(err);    
+  }
+}
+
+const addItemToCart = async (items, userId) => {
+
+  try{
+     await client.query(`
+    UPDATE cart 
+    SET "numberOfItems" = "numberOfItems + 1
+    WHERE "userId" = $1;   
+    `, [userId])
+
+    const { rows: [ addItem ] } = await clienty.query(`
+    INSERT INTO cart(items, "numberOfItems")
+    VALUES($1, (SELECT "numberOfItems" 
+    FROM cart
+    WHERE "userId" = $2))
+    RETURNING *;
+    `, [items, userId])
+
+    return addItem;
+  } catch(err){
+    console.error(err);
+  }
+}
+
+const getCartContent = async () => {
+
+  try{
+    const { rows: [ getAll ] } = await client.query(`
+    SELECT * 
+    FROM carts;  
+   `)
+
+   return getAll;
+  } catch(err){
+    console.error(err);
+  }
+
+}
+
 module.exports = {
   addToUserCart,
   deleteFromUserCart,
-  isLoggedIn
+  isLoggedIn,
+  removeItemFromCart,
+  addItemToCart,
+  getCartContent
 }
