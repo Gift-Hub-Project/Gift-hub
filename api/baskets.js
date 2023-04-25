@@ -1,18 +1,14 @@
 const express = require('express');
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt');
 const {
     createBasket,
     getAllBaskets, 
     getBasketById,
     getBasketByName, 
     getBasketsByOccasionId,
-    // attachBasketsToOccasion,
     updateBasket,
     destroyBasket
 } = require('../db');
-
-const {verifyAdminToken, secretKey} = require('./utils');
+const { adminToken } = require('./utils');
 const router = express.Router();
 
 require('dotenv').config();
@@ -29,7 +25,7 @@ router.get('/', async (req, res) => {
 });
 
 //POST/api/baskets
-router.post('/',verifyAdminToken, async (req, res) => {
+router.post('/', adminToken, async (req, res) => {
     const { name, description, occasionId, quantity, price } = req.body;
     
     try {
@@ -56,7 +52,7 @@ router.post('/',verifyAdminToken, async (req, res) => {
 
 //PATCH/api/baskets
 
-router.patch('/:id', verifyAdminToken, async (req,res, next) => {
+router.patch('/:id', adminToken, async (req,res, next) => {
     const basketId = req.params.id;
     const { name, description, occasionId, quantity, price } = req.body;
 
@@ -83,7 +79,7 @@ router.patch('/:id', verifyAdminToken, async (req,res, next) => {
 
 //DELETE/api/baskets
 
-router.delete('/:basketId', verifyAdminToken, async (req,res,next) => {
+router.delete('/:basketId', adminToken, async (req,res,next) => {
     const basketId = req.params.basketId;
 
     try {
