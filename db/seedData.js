@@ -1,6 +1,5 @@
 const client = require('./client');
 const { createUser } = require('./users');
-
 const { createOccasion} = require('./occasions');
 const { createBasket } = require('./baskets');
 const { addToUserCart } = require('./userscart');
@@ -66,9 +65,9 @@ const createInitialUsers = async () => {
   console.log("STARTING TO CREATE USERS...")
   try {
     const usersToCreate = [
-      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com" },
-      { username: "alice", password: "alicat7", address: "wonderland", email: "alice@wonderland.com" },
-      { username: "bob", password: "bobert007", address: "County lock up", email: "bob@cell4.com" },
+      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com", isAdmin: true },
+      { username: "alice", password: "alicat7", address: "wonderland", email: "alice@wonderland.com", isAdmin: false },
+      { username: "bob", password: "bobert007", address: "County lock up", email: "bob@cell4.com", isAdmin: false },
     ]
     const users = await Promise.all(usersToCreate.map(createUser))
 
@@ -183,12 +182,5 @@ const testDb = async () => {
 
 
 module.exports = {
-  rebuildTables,
-  dropTables,
-  createTables,
-  createInitialUsers,
-  createInitialCart,
-  createOccasions,
-  createBaskets,
   rebuildDb
 }
