@@ -7,7 +7,7 @@ const getUser = async({username, password}) => {
     SELECT *
     FROM users
     WHERE username = $1
-    `)
+    `, [username])
     if(user && await bcrypt.compare(password, user.password)){
       delete user.password
       return user;
@@ -25,7 +25,7 @@ const getUserById = async ( userId ) =>{
     SELECT id, username
     FROM users
     WHERE id = $1
-    `)
+    `, [userId])
     if(!user) {
       return null
     }
@@ -36,13 +36,13 @@ const getUserById = async ( userId ) =>{
   }
 }
 
-const getUsernameByUsername = async () => {
+const getUsernameByUsername = async (username) => {
   try{
     const { rows: [ user ] } = await client.query(`
     SELECT *
     FROM users
     WHERE username = $1
-    `)
+    `, [username])
     return user;
   } catch(err) {
     console.error(err);
