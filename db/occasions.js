@@ -46,8 +46,51 @@ const createOccasion = async ({ name, categories }) => {
   }
 }
 
+const destroyOccasion = async (id) => {
+    try {
+      await client.query(`
+  
+        DELETE 
+        FROM occasions
+        WHERE id=$1;
+  
+    `, [id])
+
+  
+    } catch (err) {
+      console.log(err);
+    }
+  
+  }
+  
+  const updateOccasion = async ({ id, name, categories }) => {
+
+    try {
+  
+        if(!name || !categories) { 
+            throw new Error('Both fields need to be filled out to update the Occasion.') }
+
+        const { rows: [newOccasion] } = await client.query(`
+        UPDATE occasions
+        SET categories=$1, name=$2
+        WHERE id=$3 
+        RETURNING *;
+      `, [categories, name, id]);
+  
+        return newOccasion;
+      
+  
+    } catch (err) {
+      console.log(err);
+    }
+  
+  }
+
 module.exports = {
-  getOccasionById,
-  getOccasionByName,
-  createOccasion
+    getOccasionById,
+    getOccasionByName,
+    createOccasion,
+    destroyOccasion,
+    updateOccasion
+
 }
