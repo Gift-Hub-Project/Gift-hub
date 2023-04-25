@@ -1,18 +1,18 @@
 const client = require ('./client.js');
 
 const createBasket = async({name, description, occasionId,  quantity, price}) =>{
-    try{
-        const { rows: [ baskets ]} = await client.query(`
-        INSERT INTO baskets(name, description, "occasionId", quantity, price)
-        VALUES ($1, $2, $3, $4, $5)
-        RETURNING *;
-        `, [name, description, occasionId, quantity, price]);
-        return baskets
+  try{
+    const { rows: [ baskets ]} = await client.query(`
+    INSERT INTO baskets(name, description, "occasionId", quantity, price)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+    `, [name, description, occasionId, quantity, price]);
+    return baskets
 
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+  } catch (error) {
+      console.error(error);
+      throw error;
+  }
 };
 
 const getAllBaskets = async() =>{

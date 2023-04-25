@@ -6,7 +6,7 @@ const getUser = async({username, password}) => {
     const { rows: [ user ]} = await client.query(`
     SELECT *
     FROM users
-    WHERE username = '${username}'
+    WHERE username = $1
     `)
     if(user && await bcrypt.compare(password, user.password)){
       delete user.password
@@ -24,7 +24,7 @@ const getUserById = async ( userId ) =>{
     const { rows: [ user ] } = await client.query(`
     SELECT id, username
     FROM users
-    WHERE id = ${userId}
+    WHERE id = $1
     `)
     if(!user) {
       return null
@@ -36,12 +36,12 @@ const getUserById = async ( userId ) =>{
   }
 }
 
-const getUsernameByUsername = async ( username ) => {
+const getUsernameByUsername = async () => {
   try{
     const { rows: [ user ] } = await client.query(`
     SELECT *
     FROM users
-    WHERE username = ${username}
+    WHERE username = $1
     `)
     return user;
   } catch(err) {
@@ -53,7 +53,7 @@ const getUsernameByUsername = async ( username ) => {
 const createUser = async ({ username, password, email, address} ) => {
   try{
     password = await bcrypt.hash(password, 10);
-    const {rows: [ user ] } = await client.query(`
+    const { rows: [ user ] } = await client.query(`
     INSERT INTO users(username, password, email, address)
     VALUES($1, $2, $3, $4)
     ON CONFLICT (username) DO NOTHING
@@ -61,7 +61,6 @@ const createUser = async ({ username, password, email, address} ) => {
     `, [username, password
       , email, address ])
 
-    delete user.password;
     return user;
   } catch (err) {
     console.error(err);
