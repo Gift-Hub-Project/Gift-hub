@@ -53,19 +53,19 @@ const createTables = async () => {
         "occasionsId" INT REFERENCES occasions(id),
         "basketId" INT REFERENCES baskets(id)
         );
-        CREATE TABLE cart (
-          id SERIAL PRIMARY KEY,
-          items INTEGER REFERENCES baskets(id),
-          "numberOfItems" INTEGER DEFAULT 0,
-          "isLoggedIn" BOOLEAN DEFAULT false,
-          "userId" INTEGER REFERENCES users(id),
-          "isPurchased" BOOLEAN DEFAULT false
-          );
-        CREATE TABLE cart_baskets( 
-            id SERIAL PRIMARY KEY,
-            "cartId" INT REFERENCES cart(id),
-            "basketId" INT REFERENCES baskets(id),
-            UNIQUE ("cartId", "basketId")
+      CREATE TABLE cart (
+        id SERIAL PRIMARY KEY,
+        items INTEGER REFERENCES baskets(id),
+        "numberOfItems" INTEGER DEFAULT 0,
+        "isLoggedIn" BOOLEAN DEFAULT false,
+        "userId" INTEGER REFERENCES users(id),
+        "isPurchased" BOOLEAN DEFAULT false
+         );
+      CREATE TABLE cart_baskets( 
+        id SERIAL PRIMARY KEY,
+        "cartId" INT REFERENCES cart(id),
+        "basketId" INT REFERENCES baskets(id),
+        UNIQUE ("cartId", "basketId")
           );
 
       `);

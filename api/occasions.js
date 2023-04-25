@@ -1,7 +1,14 @@
 const express = require('express');
-const { getOccasionByName, createOccasion } = require('../db/occasions');
+const { 
+  getOccasionByName, 
+  createOccasion,
+  updateOccasion,
+  destroyOccasion
+} = require('../db/occasions');
+const { adminToken } = require('./utils');
 const router = express.Router();
-const { adminToken } = require('utils.js');
+
+require
 
 //GET /api/occasions
 router.get('/', async(req, res, next) => {
@@ -32,12 +39,42 @@ router.post('/', adminToken, async(req, res, next) => {
    next(err);
   }
 });
-//PATCH /api/occasions/:occasionsId
-router.patch('/:ocassionsId', async(req, res, next) =>{
+//PATCH /api/occasions
+router.patch('/:id', adminToken, async(req, res, next) =>{
+  const occasionId = req.params.id;
+  const { name, categories } = req.body;
 
-})
+  try {
+    const occasion = await updateOccasion(occasionId, {
+      name,
+      categories
+    });
+    if(!occasion) {
+      const error = Error(`Ocassion with ID ${occasionId} can be editied by admin`);
+      error.statusCode = 401;
+      throw error;
+    }
+    res.send(occasion);
+  }catch(error) {
+   console.error(error);
+   next(error);
+  }
+});
 //DELETE /api/occasions/:occasionsId
 router.delete('/:routineId', async(req, res, next) => {
+  const occasionId = req.params.occasionId;
+  try {
+    const deletedOccasion = await destroyOccasion(occasionId);
 
-})
+    if(!deletedOccasion) {
+        const error = new Error(`Occasins can only be deleted by admin`);
+    }
+    res.send({ message: `Occasion with ID ${occasionId} has been deleted`})
+  } catch(error) {
+    console.error(error);
+    next(error)
+  }
+});
+
+
 module.exports = router;

@@ -3,4 +3,4 @@ const {rebuildDb} = require('./seedData');
 
 rebuildDb()
   .catch(console.error)
-  .finally(() => Client.end());
+  .finally(() => client.end());
