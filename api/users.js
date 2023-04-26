@@ -6,9 +6,10 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 
+
 router.use(bodyParser.json());
 
-userRouter.post('/login', async(req, res, next) => {
+router.post('/', async(req, res, next) => {
   const output = {
     success: false,
     error: null,
@@ -37,7 +38,7 @@ userRouter.post('/login', async(req, res, next) => {
   }
 });
 
-userRouter.post('/register', async(req, res, next ) => {
+router.post('/register', async(req, res, next ) => {
   const output ={
     success: false,
     error: null,
@@ -58,7 +59,6 @@ userRouter.post('/register', async(req, res, next ) => {
       }, process.env.JWT_SECRET);
       output.token = token
     }
-    
     
     res.send(output)
   }catch(err){
