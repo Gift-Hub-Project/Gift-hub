@@ -1,5 +1,7 @@
+const APIURL = "http://localhost:8080"
+
 const registerNewUser = (username, password, email, setLoginOut, navigator, errorSetter) =>{
-  fetch('/api/users/register',{
+  fetch(`${APIURL}/api/users/register`,{
     method:"POST",
     headers:{
       "Content-type": "application/json"
@@ -23,8 +25,8 @@ const registerNewUser = (username, password, email, setLoginOut, navigator, erro
     }).catch(console.error);
 }
 
-export const userLogin = async(event) =>{
-  fetch('/api/users/login',{
+export const userLogin = async(username, password, email, setLoginOut, navigator, errorSetter) =>{
+  fetch('/',{
     method:"POST",
     headers:{
       "Content-type": "application/json"

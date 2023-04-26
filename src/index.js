@@ -7,33 +7,35 @@ import Register from "./components/Register";
 import Header from "./components/header.js";
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(window.localStorage.getItem('giftHub-token'));
+    const [loginOut, setLoginOut] = useState(window.localStorage.getItem('giftHub-token'));
     
     return (
         <>
-         <Header isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn} /> 
+         <Header loginOut = {loginOut} setLoginOut = {setLoginOut} /> 
+         <Login />
+         <Register />
          </>
     );
 };
 
-const App = () => {
+// const App = () => {
 
-  const [ loginOut, setLoginOut ] = useState("");
+//   const [ loginOut, setLoginOut ] = useState("");
 
-    return (
-      <div id="app">
-        <Login />
-        <Register />
+//     return (
+//       <div id="app">
+//         <Login />
+//         <Register />
 
-        {/* <Routes>
-          <Route path="/login" element={<Login setLoginOut={setLoginOut}/>} />
-          <Route path='/register' element={<Register setLoginOut={setLoginOut} />} />
+//         {/* <Routes>
+//           <Route path="/login" element={<Login setLoginOut={setLoginOut}/>} />
+//           <Route path='/register' element={<Register setLoginOut={setLoginOut} />} />
 
-        </Routes> */}
+//         </Routes> */}
 
-      </div>
-    )
-};
+//       </div>
+//     )
+// };
 
 const Container = document.getElementById("root");
 const root = createRoot(Container);
