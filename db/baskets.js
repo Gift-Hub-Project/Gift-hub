@@ -1,21 +1,21 @@
 const client = require ('./client.js');
 
 const createBasket = async({name, description, occasionId,  quantity, price}) =>{
-    try{
-        const { rows: [ baskets ]} = await client.query(`
-        INSERT INTO baskets(name, description, "occasionId", quantity, price)
-        VALUES ($1, $2, $3, $4, $5)
-        RETURNING *;
-        `, [name, description, occasionId, quantity, price]);
-        return baskets
+  try{
+    const { rows: [ baskets ]} = await client.query(`
+    INSERT INTO baskets(name, description, "occasionId", quantity, price)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+    `, [name, description, occasionId, quantity, price]);
+    return baskets
 
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+  } catch (error) {
+      console.error(error);
+      throw error;
+  }
 };
 
-const getAllBaskets = async(id) =>{
+const getAllBaskets = async() =>{
     try{
         const { rows } = await client.query(`
             SELECT *
@@ -28,13 +28,13 @@ const getAllBaskets = async(id) =>{
     }
 };
 
-const getBasketById = async(id) =>{
+const getBasketById = async (id) =>{
     try{
         const { rows:[ baskets ]} = await client.query(`
             SELECT *
             FROM baskets
-            WHERE id = ${id}
-        `);
+            WHERE id = $1
+        `,[id]);
         return baskets
     } catch(error){
         console.error(error);
@@ -47,45 +47,12 @@ const getBasketByName = async(name) =>{
         const { rows:[ baskets ] } = await client.query(`
             SELECT *
             FROM baskets
-            WHERE name = ${name}
-        `);
+            WHERE name = $1
+        `,[name]);
         return baskets;
     } catch(error){
         console.error(error);
         throw error;
-    }
-};
-
-const getBasketsByOccasionId = async({id}) =>{
-    try{
-        const { rows } = await client.query(`
-            SELECT baskets.*, occasions.name, occasions.categories
-            FROM occasions
-            JOIN baskets
-                ON occasions."basketId" = baskets.id
-            WHERE occasions."occasionId" = $1
-        `, [id]);
-    } catch(error){
-        console.error(error);
-        throw error;
-    }
-};
-
-const attachBasketsToOccasions = async (occasions) => {
-    try {
-        for (let i = 0; i< occasions.length; i++){
-            const {rows: baskets} = await client.query(`
-                SELECT baskets.*, occasions.name, occasions.categories
-                FROM occasions
-                JOIN baskets
-                    ON occasions."basketId" = baskets.id
-                WHERE occasions."occasionId" = ${occasions[i].id}
-            `)
-            occasions[i].baskets = baskets;
-        } 
-    } catch (error){
-        console.error(error);
-        throw error
     }
 };
 
@@ -130,8 +97,6 @@ module.exports = {
     getAllBaskets,
     getBasketById,
     getBasketByName,
-    getBasketsByOccasionId,
-    attachBasketsToOccasions,
     updateBasket,
     destroyBasket
 };

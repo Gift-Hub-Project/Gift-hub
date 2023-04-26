@@ -1,9 +1,20 @@
+
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Header from "./components/header.js";
 
+const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(window.localStorage.getItem('giftHub-token'));
+    
+    return (
+        <>
+         <Header isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn} /> 
+         </>
+    );
+};
 
 const App = () => {
 
