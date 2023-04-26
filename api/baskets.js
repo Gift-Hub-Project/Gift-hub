@@ -4,9 +4,9 @@ const {
     getAllBaskets, 
     getBasketById,
     getBasketByName, 
-    getBasketsByOccasionId,
     updateBasket,
-    destroyBasket
+    destroyBasket,
+    getBasketsByOccasionId
 } = require('../db');
 const { adminToken } = require('./utils');
 const router = express.Router();
@@ -67,7 +67,7 @@ router.patch('/:id', adminToken, async (req,res, next) => {
 
         if(!basket) {
             const error= new Error(`Basket with ID ${basketId} can only be edited by admin`);
-            error.statusCode = 404;
+            error.statusCode = 401;
             throw error;
         }
         res.send(basket);
@@ -86,7 +86,8 @@ router.delete('/:basketId', adminToken, async (req,res,next) => {
         const deletedBasket = await destroyBasket(basketId);
 
         if(!deletedBasket) {
-            const error = new Error(`Basket with ID ${basketId} can only be delted by admin`)
+            const error = new Error(`Basket with ID ${basketId} can only be delted by admin`);
+            error.statusCode = 401;
             throw error;
         }
         res.send({ message: `Basket with ID ${basketId} has been deleted`})
