@@ -23,7 +23,7 @@ const registerNewUser = (username, password, email, setLoginOut, navigator, erro
     }).catch(console.error);
 }
 
-export const userLogin = async(username, password, setLoginOut, navigator, errorSetter) =>{
+export const userLogin = async(event) =>{
   fetch('/api/users/login',{
     method:"POST",
     headers:{
@@ -36,7 +36,7 @@ export const userLogin = async(username, password, setLoginOut, navigator, error
   }).then(response => response.json())
     .then(result =>{
       if(result.success){
-        window.localStorage.setItem('token', result.token);
+        window.localStorage.setItem('token', response.data.token);
         window.localStorage.setItem('username', username);
         setLoginOut('Logout')
         navigator('/')

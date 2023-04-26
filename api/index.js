@@ -7,6 +7,7 @@ const { JWT_SECRET } = process.env;
 
 apiRouter.use(express.json());
 
+
 apiRouter.use(async(req, res, next)=>{
     const prefix = 'Bearer ';
     const auth = req.header('Authorization');

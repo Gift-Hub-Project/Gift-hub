@@ -11,7 +11,7 @@ server.get('/', (req, res, next) => res.sendFile(path.join(__dirname, '../public
 
 server.use(morgan('dev'))
 server.use('/api', apiRouter);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
  client.connect();
   console.log(`listening on port ${PORT}`);
