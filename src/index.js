@@ -8,7 +8,6 @@ const App = () => {
     
     return (
         <>
-        <h1>WHy Wont this work????</h1>
          <Header isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn} /> 
          </>
     );
