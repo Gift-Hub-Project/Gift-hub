@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { getUserById } = require('../db/users');
@@ -23,6 +24,8 @@ router.use(async (req, res, next) => {
         }
     }
 });
+
+
 
 router.use((req, res, next) => {
     if (req.user) {
