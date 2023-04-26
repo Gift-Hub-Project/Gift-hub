@@ -4,7 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const client = require('./db/client');
 const path = require("path");
-// const apiRouter = require("./api/index");
+const apiRouter = require("./api/index");
 
 app.use(express.json());
 
@@ -18,7 +18,7 @@ app.get("/", (req,res) => {
     res.sendFile(path.join(__dirname, "index.html"))
 });
 
-// app.use('/api', apiRouter);
+app.use('/api', apiRouter);
 
 app.use(morgan('dev'));
 
@@ -34,5 +34,7 @@ app.use((req, res, next) => {
 
 client.connect();
 
+
 module.exports = app;
+
 

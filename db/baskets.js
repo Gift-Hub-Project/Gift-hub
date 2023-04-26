@@ -97,8 +97,6 @@ module.exports = {
     getAllBaskets,
     getBasketById,
     getBasketByName,
-    getBasketsByOccasionId,
-    // attachBasketsToOccasions,
     updateBasket,
     destroyBasket
 };
