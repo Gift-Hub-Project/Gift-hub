@@ -1,14 +1,17 @@
 const client = require('./client');
 const { createUser } = require('./users');
+
 const { createOccasion} = require('./occasions');
 const { createBasket } = require('./baskets');
-const { addToUserCart } = require('./userscart');
+const { addToUserCart } = require('./usersCart');
 
 const dropTables = async () => {
   try {
     console.log("DROPPING ALL TABLES...")
     await client.query(`
+  DROP TABLE IF EXISTS cart_baskets;
   DROP TABLE IF EXISTS cart;
+  DROP TABLE IF EXISTS occasions_baskets;
   DROP TABLE IF EXISTS baskets;
   DROP TABLE IF EXISTS occasions;
   DROP TABLE IF EXISTS users;
@@ -45,14 +48,26 @@ const createTables = async () => {
         quantity INTEGER DEFAULT '0',
         price FLOAT
         );
-        CREATE TABLE cart (
-          id SERIAL PRIMARY KEY,
-          items INTEGER REFERENCES baskets(id),
-          "numberOfItems" INTEGER DEFAULT 0,
-          "isLoggedIn" BOOLEAN DEFAULT false,
-          "userId" INTEGER REFERENCES users(id),
-          "isPurchased" BOOLEAN DEFAULT false
+      CREATE TABLE occasions_baskets (
+        id SERIAL PRIMARY KEY,
+        "occasionsId" INT REFERENCES occasions(id),
+        "basketId" INT REFERENCES baskets(id)
+        );
+      CREATE TABLE cart (
+        id SERIAL PRIMARY KEY,
+        items INTEGER REFERENCES baskets(id),
+        "numberOfItems" INTEGER DEFAULT 0,
+        "isLoggedIn" BOOLEAN DEFAULT false,
+        "userId" INTEGER REFERENCES users(id),
+        "isPurchased" BOOLEAN DEFAULT false
+         );
+      CREATE TABLE cart_baskets( 
+        id SERIAL PRIMARY KEY,
+        "cartId" INT REFERENCES cart(id),
+        "basketId" INT REFERENCES baskets(id),
+        UNIQUE ("cartId", "basketId")
           );
+
       `);
     console.log("FINISHED MAKING TABLES!")
   } catch (err) {
@@ -89,22 +104,22 @@ const createInitialCart = async () => {
     const cartToCreate = [
       { items: 1, numberOfItems: 1, isLoggedIn: true, userId: 1, isPurchased: false },
       { items: 2, numberOfItems: 2, isLoggedIn: true, userId: 2, isPurchased: false },
-      { items: 3, numberOfItems: 3, isLoggedIn: true, userId: 3, isPurchased: false },
+      { items: 3, numberOfItems: 3, isLoggedIn: true, userId: 3, isPurchased: true },
     ]
-    const cart = await Promise.all(cartToCreate.map( (value) => {
+    const cart = await Promise.all(cartToCreate.map((value) => {
 
-      addToUserCart(value.items,
+      return addToUserCart(value.items,
         value.numberOfItems,
         value.isLoggedIn,
         value.userId,
         value.isPurchased
-        )
+      )
     }))
 
     console.log("Cart created:")
     console.log(cart)
     console.log("Finished creating Cart!")
-  } catch(err) {
+  } catch (err) {
     console.error("ERROR CREATING CART!")
     throw err;
   }
@@ -114,8 +129,8 @@ const createOccasions = async () => {
   console.log("STARTING TO CREATE CART...")
   try {
     const OccasionToCreate = [
-      { name: "For Mom", categories: ["gardening", "cooking", "self-care", "shopping", "wine"]  },
-      { name: "For Mom", categories: ["grilling", "golfing", "self-care", "bourban", "sports"]  },
+      { name: "For Mom", categories: ["gardening", "cooking", "self-care", "shopping", "wine"] },
+      { name: "For Dad", categories: ["grilling", "golfing", "self-care", "bourban", "sports"] },
       { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
     ]
     const occasion = await Promise.all(OccasionToCreate.map(createOccasion))
@@ -123,7 +138,7 @@ const createOccasions = async () => {
     console.log("Occasion created:")
     console.log(occasion)
     console.log("Finished creating Occasion!")
-  } catch(err) {
+  } catch (err) {
     console.error("ERROR CREATING OCCASION!");
     throw err;
   }
@@ -135,18 +150,37 @@ const createBaskets = async () => {
   try {
     const basketsToCreate = [
       { name: "Gardening Basket", description: "a basket to fulfill all of your moms gardening dreams", occasionId: 1, quantity: 1, price: 50 },
-      { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", occasionId: 1, quantity: 1, price: 60  },
-      { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", occasionId: 1, quantity: 1, price: 75  },
+      { name: "Grilling Basket", description: "a basket to fulfill all of your dads grilling dreams", occasionId: 1, quantity: 1, price: 60 },
+      { name: "Champagne Basket", description: "a basket to fulfill your bridal party's bubbly dreams", occasionId: 1, quantity: 1, price: 75 }
     ]
     const basket = await Promise.all(basketsToCreate.map(createBasket))
 
     console.log("Basket created:")
     console.log(basket);
     console.log("Finished creating Basket!")
-  } catch(err) {
+  } catch (err) {
     console.error("ERROR CREATING BASKET!")
     throw err;
   }
+}
+
+const createInitialCartBasketIds = async () => {
+  console.log("STARTING TO CREATE CART_BASKETS ID TABLE");
+try {
+  const cartBasketIdsToCreate = [
+    { occasionId: 1, basketId: 2 },
+    { occasionId: 3, basketId: 1 },
+    { occasionId: 2, basketId: 3 },
+  ]
+  const cartBasket = await Promise.all(cartBasketIdsToCreate.map(createInitialCartBasketId))
+
+  console.log('CART_BASKETS table ids created:');
+  console.log(cartBasket);
+  console.log("Finished creating CART_BASKETS Id table!");
+} catch(err) {
+  console.error("ERROR CREATING CART_BASKETS ID")
+}
+
 }
 
 const rebuildTables = async () => {
@@ -161,12 +195,13 @@ const rebuildTables = async () => {
 const rebuildDb = async () => {
   try {
     await testDb();
-  await rebuildTables();
-  await createInitialUsers();
-  await createOccasions();
-  await createBaskets();
-  await createInitialCart();
-  } catch(err){
+    await rebuildTables();
+    await createInitialUsers();
+    await createOccasions();
+    await createBaskets();
+    await createInitialCart();
+    await createInitialCartBasketIds();
+  } catch (err) {
     console.log(err);
   }
 }
