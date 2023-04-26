@@ -8,8 +8,6 @@ const {
 const { adminToken } = require('./utils');
 const router = express.Router();
 
-require
-
 //GET /api/occasions
 router.get('/', async(req, res, next) => {
   try{

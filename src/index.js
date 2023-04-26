@@ -1,15 +1,21 @@
 import React from "react";
 import { createRoot} from "react-dom/client";
-import { HashRouter} from 'react-router-dom';
+import { HashRouter, Routes, Route} from 'react-router-dom';
+import AllOccasions from './occasions';
 
 
 const Container = document.getElementById("root");
 
 const root = createRoot(Container);
 const App = () => {
-    return (<h1>Hello World</h1>)
+    return (
+     <Routes>
+        <Route path='/occasions' element={<AllOccasions />}/>
+     </Routes>
+    )
 }
 root.render(
+   
     <HashRouter>
         <App />
     </HashRouter>
