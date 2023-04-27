@@ -5,10 +5,12 @@ const { getUser, getUserByUsername } = require('../db');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const { response } = require('express');
+const { requireUser } = require('./utils.js');
 
 router.use(bodyParser.json());
 
-userRouter.post('/login', async(req, res, next) => {
+router.post('/', async(req, res, next) => {
   const output = {
     success: false,
     error: null,
@@ -17,7 +19,8 @@ userRouter.post('/login', async(req, res, next) => {
   }
 
   try{
-    const user = await getUser(...Object.values(req.body));
+    console.log
+    const user = await getUser(req.body);
     if(!user){
       output.error = "User of that combo does not exist";
     }
@@ -37,7 +40,7 @@ userRouter.post('/login', async(req, res, next) => {
   }
 });
 
-userRouter.post('/register', async(req, res, next ) => {
+router.post('/register', async(req, res, next ) => {
   const output ={
     success: false,
     error: null,
@@ -59,14 +62,20 @@ userRouter.post('/register', async(req, res, next ) => {
       output.token = token
     }
     
-    
     res.send(output)
   }catch(err){
     output.error = err;
     res.send(output)
   }
-
 });
+
+router.get('/myaccount', requireUser, async(req, res, next) => {
+  try{
+    res.send(req.user)
+  } catch (error) {
+    console.error(error);
+  }
+})
     
 module.exports = router;
  

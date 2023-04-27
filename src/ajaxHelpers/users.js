@@ -1,5 +1,7 @@
+const APIURL = "http://localhost:8080"
+
 const registerNewUser = (username, password, email, setLoginOut, navigator, errorSetter) =>{
-  fetch('/api/users/register',{
+  fetch(`${APIURL}/api/users/register`,{
     method:"POST",
     headers:{
       "Content-type": "application/json"
@@ -23,8 +25,8 @@ const registerNewUser = (username, password, email, setLoginOut, navigator, erro
     }).catch(console.error);
 }
 
-export const userLogin = async(event) =>{
-  fetch('/api/users/login',{
+export const userLogin = async(username, password, setLoginOut, navigator,errorSetter) =>{
+  fetch(`${APIURL}/api/users`,{
     method:"POST",
     headers:{
       "Content-type": "application/json"
@@ -35,8 +37,9 @@ export const userLogin = async(event) =>{
     })
   }).then(response => response.json())
     .then(result =>{
+      console.log("result",result)
       if(result.success){
-        window.localStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('token', result.token);
         window.localStorage.setItem('username', username);
         setLoginOut('Logout')
         navigator('/')
@@ -45,4 +48,19 @@ export const userLogin = async(event) =>{
     }).catch(console.error);
 }
 
+export const getUser = async (token) => {
+  try {
+    const response =await fetch (`${APIURL}/api/users/myaccount`, {
+     method : "GET",
+     headers : {
+      "Content-type" : "application/json",
+      "Authorization" : `Bearer ${token}`
+     } 
+    })
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 export default registerNewUser;

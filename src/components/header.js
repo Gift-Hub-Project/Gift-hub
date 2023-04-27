@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import searchFunction from './search.js';
 
-const Header =({ isLoggedIn, setIsLoggedIn}) => {
+const Header =({ loginOut, setLoginOut}) => {
 
     const [searchInputQuery, setSearchInputQuery] = useState('');
 
@@ -28,7 +28,7 @@ const Header =({ isLoggedIn, setIsLoggedIn}) => {
     }
     const logout = () => {
         window.localStorage.getItem("giftHub-token");
-        setIsLoggedIn(false);
+        setLoginOut(false);
     };
 
     return (
@@ -60,7 +60,7 @@ const Header =({ isLoggedIn, setIsLoggedIn}) => {
                     )}
                     <Link to="/shoppingcart">Shopping Cart</Link>
                         {
-                            isLoggedIn? (
+                            loginOut? (
                             <Link to="/" onClick ={logout}>Logout</Link>
                             ) : (
                             <Link to="/login">Login/Register</Link>

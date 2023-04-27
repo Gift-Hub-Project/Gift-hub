@@ -31,7 +31,7 @@ const createTables = async () => {
         "isLoggedIn" BOOLEAN DEFAULT false,
         "isAdmin" BOOLEAN DEFAULT false,
         cart BOOLEAN DEFAULT false,
-        address VARCHAR(255) NOT NULL,
+        address VARCHAR(255),
         email VARCHAR(255) NOT NULL
        );
       CREATE TABLE occasions (
@@ -165,7 +165,7 @@ const createBaskets = async () => {
 
 const createInitialCartBasketIds = async () => {
   console.log("STARTING TO CREATE CART_BASKETS ID TABLE");
-try {
+    try {
   const cartBasketIdsToCreate = [
     { occasionId: 1, basketId: 2 },
     { occasionId: 3, basketId: 1 },
