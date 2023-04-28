@@ -22,9 +22,9 @@ router.get('/', async (req, res) => {
 });
 
 //PATCH/api/cart/item   -add item to cart, update number of items
-router.patch('/:items', async (req, res, next) => { //add requireUser?
-        const { items } = req.params
-        
+router.patch('/:items', async (req, res, next) => { 
+        const { basketId } = req.params
+
     try {
         await addItemToCart(items, userId) 
         res.send({ message: "Item added to cart!"});
@@ -45,7 +45,7 @@ router.patch('/', async (req, res, next) => {
             const deleteAll = await deleteFromUserCart()
             res.send({ message: "Cart is now Empty.", deleteAll })
         } else { 
-            res.send({ message: "Cart "}) // may update this with requireUser
+            res.send({ message: "Cart "}) 
         }
     } catch(err) {
         next(error);
@@ -57,7 +57,7 @@ router.delete('/:items', async (req, res, next) => {
     const { items } = req.params
 
     try {        
-            await removeItemFromCart(items);
+            await removeItemFromCart(cartId, basketId, 1);
             res.send({ message: "Item deleted from cart."}) 
         if(items.length === 0){
             res.send({ message: "No item to delete."});
