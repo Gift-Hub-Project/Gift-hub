@@ -3,7 +3,8 @@ const {
   getOccasionByName, 
   createOccasion,
   updateOccasion,
-  destroyOccasion
+  destroyOccasion,
+  getAllOccasions
 } = require('../db/occasions');
 const { adminToken } = require('./utils');
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
 //GET /api/occasions
 router.get('/', async(req, res, next) => {
   try{
-    const occasions = await getOccasionByName();
+    const occasions = await getAllOccasions();
     res.send(occasions);
   }catch(err){
    next(err);

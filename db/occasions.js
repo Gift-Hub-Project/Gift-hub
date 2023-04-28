@@ -1,7 +1,20 @@
 const client = require('./client.js');
 
 
-const getOccasionByName = async ({ name }) => {
+const getAllOccasions = async() => {
+  try{
+    const { rows } = await client.query(`
+    SELECT id, name, categories
+    FROM occasions;
+    `);
+
+    return rows
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+const getOccasionByName = async ( name ) => {
   try {
       const { rows: [occasion] } = await client.query(`
   SELECT *
@@ -87,6 +100,7 @@ const destroyOccasion = async (id) => {
   }
 
 module.exports = {
+    getAllOccasions,
     getOccasionById,
     getOccasionByName,
     createOccasion,

@@ -1,20 +1,22 @@
-
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { HashRouter, Routes, Route , Routes, Route} from 'react-router-dom';
+import { HashRouter, Routes, Route} from 'react-router-dom';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Header from "./components/header.js";
+import AllOccasions from "./components/occasions";
 
 const App = () => {
     const [loginOut, setLoginOut] = useState(window.localStorage.getItem('giftHub-token'));
-    import AllOccasions from './occasions';
 
     return (
         <>
          <Header loginOut = {loginOut} setLoginOut = {setLoginOut} /> 
          <Login />
          <Register />
+         <Routes>
+           <Route path='/occasions' element={<AllOccasions />}/>
+         </Routes>
          </>
     );
 };
@@ -40,13 +42,7 @@ const App = () => {
 
 const Container = document.getElementById("root");
 const root = createRoot(Container);
-const App = () => {
-    return (
-     <Routes>
-        <Route path='/occasions' element={<AllOccasions />}/>
-     </Routes>
-    )
-}
+
 root.render(
    
     <HashRouter>
