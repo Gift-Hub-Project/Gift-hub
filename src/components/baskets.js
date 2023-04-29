@@ -20,7 +20,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
         }
     };
 
-    const addToCart = async(basketId) => {
+    const addToCart = async(basketId, numberOfItems) => {
       const userId = window.localStorage.getItem("userId");
       try{
         const response = await fetch(`${APIURL}/api/usercart`, {
@@ -28,7 +28,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
           headers: {
             'Content-Type' : 'application/json',
           },
-          body: JSON.stringify({ userId, basketId}),
+          body: JSON.stringify({ userId, basketId, numberOfItems}),
         });
         const data = await response.json()
           setUsersCart(data)
@@ -55,13 +55,13 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       }
     }
 
-    const onAddClick = () => {
+    const onAddClick = (basketId) => {
       //logic to grab/create cart
       if(!usersCart.id){
         //this code will run if cart does not exist
         // createCart(token); not working yet
       }
-        addToCart();
+        addToCart(basketId, 1);
       //invoke add to cart function 
       //logic to add basket to cart
     }
