@@ -8,6 +8,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     useEffect(() => {
         fetchBaskets();
     }, []);
+    
 
     const fetchBaskets = async () => {
         try {

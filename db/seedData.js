@@ -166,19 +166,19 @@ const createBaskets = async () => {
 const createInitialCartBasketIds = async () => {
   console.log("STARTING TO CREATE CART_BASKETS ID TABLE");
     try {
-  const cartBasketIdsToCreate = [
-    { occasionId: 1, basketId: 2 },
-    { occasionId: 3, basketId: 1 },
-    { occasionId: 2, basketId: 3 },
-  ]
-  const cartBasket = await Promise.all(cartBasketIdsToCreate.map(createInitialCartBasketId))
+      const cartBasketIdsToCreate = [
+        { occasionId: 1, basketId: 2 },
+        { occasionId: 3, basketId: 1 },
+        { occasionId: 2, basketId: 3 },
+      ]
+      const cartBasket = await Promise.all(cartBasketIdsToCreate.map(createInitialCartBasketId))
 
-  console.log('CART_BASKETS table ids created:');
-  console.log(cartBasket);
-  console.log("Finished creating CART_BASKETS Id table!");
-} catch(err) {
-  console.error("ERROR CREATING CART_BASKETS ID")
-}
+      console.log('CART_BASKETS table ids created:');
+      console.log(cartBasket);
+      console.log("Finished creating CART_BASKETS Id table!");
+    } catch(err) {
+      console.error("ERROR CREATING CART_BASKETS ID")
+    }
 
 }
 
