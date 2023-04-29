@@ -1,10 +1,13 @@
-const express = require('express');//ctrlZ
+const express = require('express');
 // const { requireUser } =require('./utils');
 const {
-  deleteFromUserCart,
-  getCartContent,
-  addItemToCart,
-  removeItemFromCart
+
+    // createCart, will need when db is pushed
+    deleteFromUserCart,
+    getCartContent,
+    addItemToCart,
+    removeItemFromCart
+
 } = require('../db');
 const router = express.Router();
 require('dotenv').config();
@@ -12,14 +15,28 @@ require('dotenv').config();
 
 //GET /api/cart   -display user cart
 router.get('/', async (req, res) => {
-
-  try {
-    const content = await getCartContent();
-    res.send({ message: "Fetched items in cart.", content });
-  } catch (error) {
-    console.log(error)
-  }
+    try {
+        const content = await getCartContent(); 
+        res.send({ message: "Fetched items in cart.", content }); 
+    } catch (error) {
+        console.log(error)
+    }
 });
+//post /api/userscart route to create a new cart
+router.post('/', async (req,res) => {
+    try {
+        let cart = {}
+        if(req.user) {
+            cart = await createCart(true, req.user.id, false);
+        } else { //we need logic for guest cart, no userId on a guest
+            await createCart(false, 0 , false);
+        }   
+        res.send(cart)
+
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 //PATCH/api/cart/item   -add item to cart, update number of items
 router.patch('/:items', async (req, res, next) => {

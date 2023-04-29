@@ -27,7 +27,6 @@ router.get('/', async (req, res) => {
 //POST/api/baskets
 router.post('/', adminToken, async (req, res) => {
     const { name, description, occasionId, quantity, price } = req.body;
-    
     try {
         const basket = await createBasket({name});
         if (basket) {

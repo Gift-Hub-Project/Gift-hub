@@ -163,6 +163,7 @@ const createBaskets = async () => {
 const createInitialCartBasketIds = async () => {
   console.log("STARTING TO CREATE CART_BASKETS ID TABLE");
     try {
+
   const cartBasketIdsToCreate = [
     { occasionId: 1, basketId: 2 },
     { occasionId: 3, basketId: 1 },
