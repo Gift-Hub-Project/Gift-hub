@@ -12,7 +12,6 @@ const createCart = async (
     RETURNING *;
     `, [ isLoggedIn, userId, isPurchased ]);
     
-
     return usersCart;
   } catch (err) {
     console.error(err);
@@ -73,5 +72,4 @@ module.exports = {
   updateCart,
   getCartById,
   getAllCarts,
-  isPurchased
 }
