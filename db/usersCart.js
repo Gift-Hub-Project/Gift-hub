@@ -36,16 +36,16 @@ const updateCart = async (cartId) => {
  }
 }
 
-const getAllCarts = async (ispurchased) => { //implement requireUser for this one in API
+const getAllCarts = async (isPurchased, userId) => { //implement requireUser for this one in API
   
   try {
-    const { rows: [ allPurchasedCarts ] } = await client.query(`
+    const { rows: allPurchasedCarts } = await client.query(`
     SELECT * 
     FROM cart
     WHERE "userId"=$1 
     AND "isPurchased"=$2 
     RETURNING *;
-    `)
+    ` [userId, isPurchased])
 
     return allPurchasedCarts
   } catch(err){

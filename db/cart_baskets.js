@@ -29,17 +29,14 @@ const addItemToCart = async ( cartId, basketId, numberOfItems ) => {
   
   }
 
-const removeItemFromCart = async ( cartId, basketId, quantity) => {
-    quantity = quantity - 1;
-    if(quantity <= 0){return}
+const removeItemFromCart = async ( cartId, basketId ) => {
+
           try{  
       const { rows: [ removeItem ] } = await client.query(`
-      UPDATE cart_baskets
-      SET "numberOfItems"=$1
-      WHERE "cartId"=$2 
-      AND "basketId"=$3
-      RETURNING *;
-      `, [ quantity, cartId, basketId])
+      DELETE FROM cart_baskets
+      WHERE "cartId"=$1
+      AND "basketId"=$2
+      `, [cartId, basketId])
   
       return removeItem;
     } catch(err){
