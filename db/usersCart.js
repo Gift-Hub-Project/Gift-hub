@@ -1,18 +1,17 @@
 const client = require('./client');
 
-const addToUserCart = async (
-  items,
-  numberOfItems,
+const createCart = async (
   isLoggedIn,
   userId,
   isPurchased
 ) => {
-  try {
+  try { 
     const { rows: [ usersCart ] } = await client.query(`
-    INSERT INTO cart(items, "numberOfItems", "isLoggedIn", "userId", "isPurchased")
-    VALUES($1, $2, $3, $4, $5)
+    INSERT INTO cart("isLoggedIn", "userId", "isPurchased")
+    VALUES($1, $2, $3)
     RETURNING *;
-    `, [items, numberOfItems, isLoggedIn, userId, isPurchased ]);
+    `, [ isLoggedIn, userId, isPurchased ]);
+    
 
     return usersCart;
   } catch (err) {
@@ -21,12 +20,14 @@ const addToUserCart = async (
   }
 }
 
-const deleteFromUserCart = async () => {
+const updateCart = async (cartId) => {
  try {
   await client.query(`
-  DELETE FROM cart WHERE "isPurchased" = true
+  UPDATE cart
+  SET "isPurchased"=true;
+  WHERE "cartId"=$1
   RETURNING *;
-  `);
+  `,[cartId]);
 
   return;
  }catch (error) {
@@ -35,76 +36,42 @@ const deleteFromUserCart = async () => {
  }
 }
 
-const isLoggedIn = async () => {
+const getAllCarts = async (isPurchased, userId) => { //implement requireUser for this one in API
+  
   try {
-    const {rows: [ usersCart ] } = await client.query(`
-    SELECT *
-    FROM users
-    WHERE "isLoggedIn" = true
-    `)
-  } catch (error){
-    console.error(err);
-    throw error;
-  }
-}
-
-const removeItemFromCart = async (id) => {
-
-  try{
-    const { rows: [ deletedItem ] } = await client.query(`
-    DELETE
-    FROM cart
-    WHERE id=$1;
-    `,[id])
-
-  } catch(error){
-    console.error(err);    
-  }
-}
-
-const addItemToCart = async (items, userId) => {
-
-  try{
-     await client.query(`
-    UPDATE cart 
-    SET "numberOfItems" = "numberOfItems + 1
-    WHERE "userId" = $1;   
-    `, [userId])
-
-    const { rows: [ addItem ] } = await clienty.query(`
-    INSERT INTO cart(items, "numberOfItems")
-    VALUES($1, (SELECT "numberOfItems" 
-    FROM cart
-    WHERE "userId" = $2))
-    RETURNING *;
-    `, [items, userId])
-
-    return addItem;
-  } catch(err){
-    console.error(err);
-  }
-}
-
-const getCartContent = async () => {
-
-  try{
-    const { rows: [ getAll ] } = await client.query(`
+    const { rows: allPurchasedCarts } = await client.query(`
     SELECT * 
-    FROM carts;  
-   `)
+    FROM cart
+    WHERE "userId"=$1 
+    AND "isPurchased"=$2 
+    RETURNING *;
+    ` [userId, isPurchased])
 
-   return getAll;
+    return allPurchasedCarts
+  } catch(err){
+    console.error(err);
+  }
+}
+
+const getCartById = async (cartId) => {
+
+  try {
+    const {rows: [cart] } = await client.query(`
+    SELECT *
+    FROM cart
+    WHERE "cartId"=$1
+    RETURNING *;
+    `,[cartId])
+    return cart;
   } catch(err){
     console.error(err);
   }
 
 }
-
 module.exports = {
-  addToUserCart,
-  deleteFromUserCart,
-  isLoggedIn,
-  removeItemFromCart,
-  addItemToCart,
-  getCartContent
+  createCart,
+  updateCart,
+  getCartById,
+  getAllCarts,
+  isPurchased
 }
