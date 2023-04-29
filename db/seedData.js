@@ -2,8 +2,7 @@ const client = require('./client');
 const { createUser } = require('./users');
 const { createOccasion} = require('./occasions');
 const { createBasket } = require('./baskets');
-const { addToUserCart } = require('./usersCart');
-
+const { createCart } = require('./usersCart');
 const dropTables = async () => {
   try {
     console.log("DROPPING ALL TABLES...")
@@ -21,7 +20,7 @@ const dropTables = async () => {
 }
 
 const createTables = async () => {
-  try {
+  try { //moved numberof items to cart_basket, 
     console.log("STARTING TO BUILD TABLES...")
     await client.query(`
       CREATE TABLE users(
@@ -52,19 +51,18 @@ const createTables = async () => {
         "occasionsId" INT REFERENCES occasions(id),
         "basketId" INT REFERENCES baskets(id)
         );
-      CREATE TABLE cart (
-        id SERIAL PRIMARY KEY,
-        items INTEGER REFERENCES baskets(id),
-        "numberOfItems" INTEGER DEFAULT 0,
-        "isLoggedIn" BOOLEAN DEFAULT false,
-        "userId" INTEGER REFERENCES users(id),
-        "isPurchased" BOOLEAN DEFAULT false
-         );
-      CREATE TABLE cart_baskets( 
-        id SERIAL PRIMARY KEY,
-        "cartId" INT REFERENCES cart(id),
-        "basketId" INT REFERENCES baskets(id),
-        UNIQUE ("cartId", "basketId")
+        CREATE TABLE cart (
+          id SERIAL PRIMARY KEY,
+          "isLoggedIn" BOOLEAN DEFAULT false,
+          "userId" INTEGER REFERENCES users(id),
+          "isPurchased" BOOLEAN DEFAULT false
+          );
+        CREATE TABLE cart_baskets( 
+            id SERIAL PRIMARY KEY,
+            "numberOfItems" INTEGER DEFAULT 0,
+            "cartId" INT REFERENCES cart(id),
+            "basketId" INT REFERENCES baskets(id),
+            UNIQUE ("cartId", "basketId")
           );
 
       `);
@@ -101,14 +99,13 @@ const createInitialCart = async () => {
   console.log("STARTING TO CREATE CART...")
   try {
     const cartToCreate = [
-      { items: 1, numberOfItems: 1, isLoggedIn: true, userId: 1, isPurchased: false },
-      { items: 2, numberOfItems: 2, isLoggedIn: true, userId: 2, isPurchased: false },
-      { items: 3, numberOfItems: 3, isLoggedIn: true, userId: 3, isPurchased: true },
+      { isLoggedIn: true, userId: 1, isPurchased: false },
+      { isLoggedIn: true, userId: 2, isPurchased: false },
+      { isLoggedIn: true, userId: 3, isPurchased: true },
     ]
     const cart = await Promise.all(cartToCreate.map((value) => {
 
-      return addToUserCart(value.items,
-        value.numberOfItems,
+      return createCart( //took out value.numberOfItems and items
         value.isLoggedIn,
         value.userId,
         value.isPurchased
@@ -166,19 +163,21 @@ const createBaskets = async () => {
 const createInitialCartBasketIds = async () => {
   console.log("STARTING TO CREATE CART_BASKETS ID TABLE");
     try {
-      const cartBasketIdsToCreate = [
-        { occasionId: 1, basketId: 2 },
-        { occasionId: 3, basketId: 1 },
-        { occasionId: 2, basketId: 3 },
-      ]
-      const cartBasket = await Promise.all(cartBasketIdsToCreate.map(createInitialCartBasketId))
 
-      console.log('CART_BASKETS table ids created:');
-      console.log(cartBasket);
-      console.log("Finished creating CART_BASKETS Id table!");
-    } catch(err) {
-      console.error("ERROR CREATING CART_BASKETS ID")
-    }
+  const cartBasketIdsToCreate = [
+    { occasionId: 1, basketId: 2 },
+    { occasionId: 3, basketId: 1 },
+    { occasionId: 2, basketId: 3 },
+  ]
+  const cartBasket = await Promise.all(cartBasketIdsToCreate.map(createInitialCartBasketId))
+
+  console.log('CART_BASKETS table ids created:');
+  console.log(cartBasket);
+  console.log("Finished creating CART_BASKETS Id table!");
+} catch(err) {
+  console.error("ERROR CREATING CART_BASKETS ID", err)
+
+}
 
 }
 

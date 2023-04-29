@@ -27,6 +27,7 @@ const registerNewUser = (username, password, email, setLoginOut, navigator, erro
 
 export const userLogin = async(username, password, setLoginOut, navigator,errorSetter) =>{
   fetch(`${APIURL}/api/users`,{
+
     method:"POST",
     headers:{
       "Content-type": "application/json"

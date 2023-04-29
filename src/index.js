@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route} from 'react-router-dom';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Header from "./components/header.js";
@@ -38,9 +38,12 @@ const App = () => {
     )
 };
 
+
 const Container = document.getElementById("root");
 const root = createRoot(Container);
+
 root.render(
+   
     <HashRouter>
         <App />
     </HashRouter>
