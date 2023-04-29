@@ -8,6 +8,7 @@ import { getUser } from "./ajaxHelpers/users";
 import Baskets from "./components/baskets";
 import EditBasket from "./components/editBasket";
 import Occasions from "./components/occasions";
+import ShoppingCart from "./components/shoppingcart";
 
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
@@ -32,6 +33,7 @@ const App = () => {
           <Route path ='/baskets' element ={<Baskets user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
           <Route path='/editbasket' element ={<EditBasket />} />
           <Route path ='/login' element={<Login loginOut={loginOut} setLoginOut={setLoginOut}/>} /> 
+          <Route path ="/shoppingCart" element = {<ShoppingCart />} />
 
         </Routes>
       </div>

@@ -44,7 +44,7 @@ const removeItemFromCart = async ( cartId, basketId ) => {
     }
   }
 
-  const updateCart = async (cartId, basketId, quantity) => {
+  const updateCart = async (quantity, cartId, basketId) => {
 
     try{
         await client.query(`
