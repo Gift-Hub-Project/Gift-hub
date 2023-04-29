@@ -25,8 +25,9 @@ const registerNewUser = (username, password, email, setLoginOut, navigator, erro
     }).catch(console.error);
 }
 
-export const userLogin = async(username, password, email, setLoginOut, navigator, errorSetter) =>{
-  fetch('/',{
+export const userLogin = async(username, password, setLoginOut, navigator,errorSetter) =>{
+  fetch(`${APIURL}/api/users`,{
+
     method:"POST",
     headers:{
       "Content-type": "application/json"
@@ -37,8 +38,9 @@ export const userLogin = async(username, password, email, setLoginOut, navigator
     })
   }).then(response => response.json())
     .then(result =>{
+      console.log("result",result)
       if(result.success){
-        window.localStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('token', result.token);
         window.localStorage.setItem('username', username);
         setLoginOut('Logout')
         navigator('/')
@@ -47,4 +49,19 @@ export const userLogin = async(username, password, email, setLoginOut, navigator
     }).catch(console.error);
 }
 
+export const getUser = async (token) => {
+  try {
+    const response =await fetch (`${APIURL}/api/users/myaccount`, {
+     method : "GET",
+     headers : {
+      "Content-type" : "application/json",
+      "Authorization" : `Bearer ${token}`
+     } 
+    })
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 export default registerNewUser;

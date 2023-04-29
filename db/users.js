@@ -22,7 +22,7 @@ const getUser = async({username, password}) => {
 const getUserById = async ( userId ) =>{
   try{
     const { rows: [ user ] } = await client.query(`
-    SELECT id, username
+    SELECT id, username, "isAdmin"
     FROM users
     WHERE id = $1
     `, [userId])
@@ -50,16 +50,16 @@ const getUsernameByUsername = async (username) => {
   }
 }
 
-const createUser = async ({ username, password, email, address} ) => {
+const createUser = async ({ username, password, email, isAdmin} ) => {
   try{
     password = await bcrypt.hash(password, 10);
     const { rows: [ user ] } = await client.query(`
-    INSERT INTO users(username, password, email, address)
+    INSERT INTO users(username, password, email, "isAdmin")
     VALUES($1, $2, $3, $4)
     ON CONFLICT (username) DO NOTHING
     RETURNING *;
     `, [username, password
-      , email, address ])
+      , email, isAdmin ])
 
     return user;
   } catch (err) {
