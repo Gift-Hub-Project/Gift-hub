@@ -27,7 +27,7 @@ const Header =({ loginOut, setLoginOut}) => {
         }
     }
     const logout = () => {
-        window.localStorage.getItem("giftHub-token");
+        window.localStorage.getItem("token");
         setLoginOut(false);
     };
 

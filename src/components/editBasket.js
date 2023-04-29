@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import Baskets from "./baskets";
 
-const EditBasket = ({ basketId }) => {
+const APIURL = "http://localhost:8080"
+
+
+const EditBasket = () => {
     const [editBasket, setEditBasket] = useState({});
     const [name, setName] = useState("");
     const [selectedOccasionsId, setSelectedOccasionsId] = useState(0);
@@ -31,9 +34,8 @@ const EditBasket = ({ basketId }) => {
             console.error(error);
         };
     };
-
     const setValues = () => {
-        if (editBasket && Object.keys(editBasket).length) {
+        if (editBasket && Object.keys(editBasket).length){
             setName(editBasket.name)
             setPrice(editBasket.price);
             setDescription(editBasket.description);
@@ -66,11 +68,11 @@ const EditBasket = ({ basketId }) => {
         if (Object.keys(fields).length) {
             setUnauthorizedUserError(false);
             try {
-                const response = await fetch(`/api/baskets/${basketId}`, fields, {
+                const response = await fetch(`${APIURL}/api/baskets/${basketId}`, fields, {
                     method: "PATCH",
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${window.localStorage.getItem("giftHub-token")}`
+                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                     },
                     body: JSON.stringify({
                         name,
@@ -89,13 +91,13 @@ const EditBasket = ({ basketId }) => {
         }
     };
 
-    const deleteBasket = async (BasketId) => {
+    const deleteBasket = async (basketId) => {
         try {
-            const response = await fetch(`/api/baskets/${BasketId}`, {
+            const response = await fetch(`${URLAPI}/api/baskets/${basketId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${window.localStorage.getItem("giftHub-token")}`
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                 },
             });
             const result = await response.json();
@@ -115,7 +117,7 @@ const EditBasket = ({ basketId }) => {
         setDuplicateBasket(false);
         if (selectedOccasionsId !== "0" && price && description && Number(price)) {
             try {
-                const response = await fetch(`/api/baskets/${basketsId}/activities`, {
+                const response = await fetch(`${APIURL}/api/baskets/${basketsId}`, {
                     BasketId: selectedBasketId,
                     price,
                     description
@@ -123,7 +125,7 @@ const EditBasket = ({ basketId }) => {
                     method:"POST",
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${window.localStorage.getItem("giftHub-token")}`
+                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                     },
                 });
                 if (response.data.error === "unauthorizedUpdateError") {
