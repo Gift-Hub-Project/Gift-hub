@@ -2,7 +2,7 @@ const express = require('express');
 // const { requireUser } =require('./utils');
 const {
 
-    // createCart, will need when db is pushed
+    createCart
     deleteFromUserCart,
     getCartContent,
     addItemToCart,

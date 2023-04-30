@@ -73,5 +73,4 @@ module.exports = {
   updateCart,
   getCartById,
   getAllCarts,
-  isPurchased
 }
