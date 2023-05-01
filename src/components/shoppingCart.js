@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const APIURL = "http://localhost:8080";
 
@@ -60,7 +61,7 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
           </div>
         ))}
         <p>Total: {total} </p>
-        <button onClick={() => checkout(usersCart.id)}>Checkout</button>
+        <Link to='/checkout'><button >Checkout</button> </Link>
      </div>
     ) :(
       <p>Your cart is empty.</p>
