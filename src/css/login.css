@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 80px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.flex-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f78764;
+  border: 4.2px #fad5c7;
+  border-style: solid;
+  border-radius: 30px;
+  padding: 40px;
+  margin: 10px;
+}
+
+#user {
+  width: 250px;
+  padding: 6px;
+  border-color: white;
+  border-style: ridge;
+}
+
+#pass {
+  margin-top: 4px;
+  width: 250px;
+  padding: 6px;
+  border-color: white;
+  border-style: ridge;
+}
+
+#submit {
+  margin-right: 190px;
+  margin-top: 10px;
+}
+
+.logregister{
+  color: #fad5c7;
+}
+.logregister:link {
+  text-decoration: none;
+}
+.logregister:hover {
+  text-decoration: underline;
+}

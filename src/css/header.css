@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+body {
+  padding: 0;
+  margin: 0;
+} 
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #b86f52;
+
+}
+
+.headerlinks {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.shopcart {
+  padding-right: 10px;
+  text-decoration: none;
+}
+.shopcart:hover {
+  text-decoration: underline;
+}
+.shopcart:visited {
+  color: #fad5c7;
+}
+
+.logout {
+  text-decoration: none;
+}
+.logo:hover {
+  text-decoration: underline;
+}
+.logout:visited {
+  color: #fad5c7;
+}
+
+.register {
+  text-decoration: none;
+}
+.register:hover {
+  text-decoration: underline;
+}
+.register:visited {
+  color: #fad5c7;
+}
+
+.logo {
+  font-family: 'Dancing Script', cursive;
+  color: #fad5c7;
+  font-size: 40px;
+  font-weight:bold;
+}
+
+button {
+  border-radius: 12px;
+  background-color:#fad5c7;
+  font-family: 'Nunito', sans-serif;
+}
+#searchInput {
+  margin: 4px;
+}
+

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 const APIURL = "http://localhost:8080";
+import '../css/baskets.css';
 
 
 const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
@@ -90,7 +91,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       }
     }  
     return (
-        <div>
+        <div className='basketsbox'>
             <h1>Baskets</h1>
             {baskets.map((basket) => (
                 <div key={basket.id}>

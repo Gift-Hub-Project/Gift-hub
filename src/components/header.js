@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import searchFunction from './search.js';
+import '../css/header.css';
 
 const Header =({ loginOut, setLoginOut}) => {
 
@@ -33,7 +34,7 @@ const Header =({ loginOut, setLoginOut}) => {
 
     return (
         <div>
-            <header>
+            <header id="header">
                 <span className ="logo">GiftHub</span>
                 <div className="headerlinks">
                     <form id="search" onSubmit ={handleSearchSubmit}>
@@ -58,13 +59,13 @@ const Header =({ loginOut, setLoginOut}) => {
                             ))}
                         </ul>
                     )}
+                    <Link className="shopcart" to="/shoppingcart">Shopping Cart</Link>
 
-                    <Link to="/shoppingcart">Shopping Cart</Link>
                         {
                             loginOut? (
-                            <Link to="/" onClick ={logout}>Logout</Link>
+                            <Link className="logout" to="/" onClick ={logout}>Logout</Link>
                             ) : (
-                            <Link to="/login">Login/Register</Link>
+                            <Link className="register" to="/login">Login/Register</Link>
                             )
                         }
                 </div>

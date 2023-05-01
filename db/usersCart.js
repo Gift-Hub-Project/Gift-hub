@@ -71,5 +71,5 @@ module.exports = {
   createCart,
   updateCart,
   getCartById,
-  getAllCarts,
+  getAllCarts
 }
