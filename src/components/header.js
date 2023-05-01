@@ -58,6 +58,7 @@ const Header =({ loginOut, setLoginOut}) => {
                             ))}
                         </ul>
                     )}
+
                     <Link to="/shoppingcart">Shopping Cart</Link>
                         {
                             loginOut? (

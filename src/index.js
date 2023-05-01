@@ -13,7 +13,7 @@ import ShoppingCart from "./components/shoppingcart";
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
     const [ user, setUser ] = useState({});
-    const [ usersCart, setUsersCart ] = useState({id:1}); //for testng, want to be an empty object
+    const [ usersCart, setUsersCart ] = useState({id:1,cartItems:[]}); //for testng, want to be an empty object
     // const [usersCart, setUsersCart] = useState([])
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
 

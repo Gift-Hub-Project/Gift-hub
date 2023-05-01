@@ -21,9 +21,9 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     };
 
     const addToCart = async(basketId, numberOfItems) => {
-      const userId = window.localStorage.getItem("userId");
+      const userId = user.id;
       try{
-        const response = await fetch(`${APIURL}/api/usercart`, {
+        const response = await fetch(`${APIURL}/api/userscart`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
@@ -55,13 +55,18 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       }
     }
 
-    const onAddClick = (basketId) => {
+    const onAddClick = (basketId, basket) => {
+      let copyUsersCart ={...usersCart}
+      copyUsersCart.cartItems.push(basket)
+      setUsersCart(copyUsersCart);
+      console.log(copyUsersCart,"copyuserscart")
+
       //logic to grab/create cart
-      if(!usersCart.id){
+      // if(!usersCart.id){
         //this code will run if cart does not exist
         // createCart(token); not working yet
-      }
-        addToCart(basketId, 1);
+      // }
+      //   addToCart(basketId, 1);
       //invoke add to cart function 
       //logic to add basket to cart
     }
@@ -91,7 +96,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
                 <div key={basket.id}>
                     <h2>{basket.name}</h2>
                     <p>{basket.description}</p>
-                    <button onClick={()=> onAddClick(basket.id)}>Add to Cart</button>
+                    <button onClick={()=> onAddClick(basket.id,basket)}>Add to Cart</button>
                     {user.isAdmin && (
                       <div>
                         <button onClick={()=>editBasket(basket.id)}>Edit</button>
