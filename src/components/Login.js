@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { userLogin } from "../ajaxHelpers/users";
+import '../css/login.css';
 
 const Login = ({setLoginOut}) =>{
 
@@ -25,14 +26,14 @@ const Login = ({setLoginOut}) =>{
   }
 
   return(
-    <div className="flex-center w-75">
-      <h3>Login</h3>
+    <div className="container">
       <form className="flex-center" onSubmit={handleSubmit}>
-        <input placeholder="username" value={usernameInput} onChange={handleChange}/>
-        <input placeholder="password" value={passwordInput} onChange={handleChange} />
-        <button >Submit</button>
+      <h3>Login</h3>
+        <input id="user" placeholder="username" value={usernameInput} onChange={handleChange}/>
+        <input id="pass" placeholder="password" value={passwordInput} onChange={handleChange} />
+        <button id="submit" >Submit</button>
         <p className="text-danger">{errorMessage}</p>
-        <p><Link to='/register'>Register</Link> New Account</p>
+        <p><Link className="logregister" to='/register'>Register</Link> New Account</p>
       </form>
     </div>
   )

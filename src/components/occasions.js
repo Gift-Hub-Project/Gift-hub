@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 const APIURL = "http://localhost:8080";
 import { Link } from 'react-router-dom';
+import '../css/occasions.css';
 
-
-const AllOccasions = () => {
+const AllOccasions = (props) => {
  const [occasions, setOccasions] = useState([]);
 
  useEffect(() => {
@@ -23,7 +23,7 @@ const AllOccasions = () => {
   getAllOccasions();
  }, [])
 
- 
+
  
  return(
   <div className="occasionsbox">
@@ -31,7 +31,8 @@ const AllOccasions = () => {
     occasions.map((occasions, index) => {
       return (
       <div className="occasion" key={index}>
-       <Link to={'baskets'}><h3>{occasions.name}</h3></Link> 
+       
+       <Link to={"baskets"}><h3>{occasions.name}</h3></Link> 
        
       </div>
       )
