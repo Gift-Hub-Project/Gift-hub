@@ -62,5 +62,6 @@ const removeItemFromCart = async ( cartId, basketId ) => {
     removeItemFromCart, //works
     addItemToCart, //works
     updateCart, //works
-    getCartContent //works
+    getCartContent, //works
+
   }
