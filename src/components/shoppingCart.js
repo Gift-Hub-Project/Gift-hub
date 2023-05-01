@@ -9,14 +9,15 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
 //  const cartItems = usersCart?.cartItems || [];
 //  console.log(cartItems,"cart")
  const total = cartItems?.reduce(
-  (acc,item) => acc + item.numberOfItems * item.basket.price,
-  0
-  );
+  (acc,item) => {
+    console.log(item.quantity, item.price,acc, "help")
+    return acc + item.quantity * item.price
+  }, 0);
 
 
  const addToCart = async (basketId, numberOfItems) => {
    try {
-    const response = await fetch(`${APIURL}/api/usercart/${usersCart.id}/${basketId}`, {
+    const response = await fetch(`${APIURL}/api/userscart/${usersCart.id}/${basketId}`, {
       method: 'PATCH',
        headers: {
        'Content-Type': 'application/json'
@@ -31,7 +32,7 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
  };
   const removeCartItem = async (cartId, basketId) => {
    try {
-    const response = await fetch(`${APIURL}/api/usercart/${cartId}/${basketId}`, {
+    const response = await fetch(`${APIURL}/api/userscart/deleteItem`, {
       method: 'DELETE',
        headers: {
        'Content-Type': 'application/json'
@@ -51,11 +52,11 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
      {cartItems && cartItems.length > 0? (
       <div>
         {cartItems.map((item) => (
-          <div key={item.basket.id}>
-            <h2>{item.basket.name}</h2>
-            <p>Price:{item.basket.price}</p>
-            <p>Quantity: {item.numberOfItems}</p>
-            <button onClick={() => removeCartItem(usersCart.id, item.basket.id)}>Remove</button>
+          <div key={item.id}>
+            <h2>{item.name}</h2>
+            <p>Price:{item.price}</p>
+            <p>Quantity: {item.quantity}</p>
+            <button onClick={() => removeCartItem(usersCart.id, item.id)}>Remove</button>
           </div>
         ))}
         <p>Total: {total} </p>
