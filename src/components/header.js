@@ -60,6 +60,7 @@ const Header =({ loginOut, setLoginOut}) => {
                         </ul>
                     )}
                     <Link className="shopcart" to="/shoppingcart">Shopping Cart</Link>
+
                         {
                             loginOut? (
                             <Link className="logout" to="/" onClick ={logout}>Logout</Link>

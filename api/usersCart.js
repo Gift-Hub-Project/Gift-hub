@@ -2,8 +2,7 @@ const express = require('express');
 // const { requireUser } =require('./utils');
 const {
 
-    // createCart, will need when db is pushed
-    deleteFromUserCart,
+    createCart, 
     getCartContent,
     addItemToCart,
     removeItemFromCart
@@ -14,9 +13,10 @@ require('dotenv').config();
 
 
 //GET /api/cart   -display user cart
-router.get('/', async (req, res) => {
+router.get('/:cartId', async (req, res) => {
+    const { cartId } =req.params;
     try {
-        const content = await getCartContent(); 
+        const content = await getCartContent(cartId); 
         res.send({ message: "Fetched items in cart.", content }); 
     } catch (error) {
         console.log(error)
@@ -39,11 +39,12 @@ router.post('/', async (req,res) => {
 })
 
 //PATCH/api/cart/item   -add item to cart, update number of items
-router.patch('/:items', async (req, res, next) => {
-  const { basketId } = req.params
+router.patch('/:basketId', async (req, res, next) => {
+  const { basketId } = req.params;
+  const { cartId, numberOfItems } = req.body;
 
   try {
-    await addItemToCart(items, userId)
+    await addItemToCart(cartId, basketId, numberOfItems)
     res.send({ message: "Item added to cart!" });
   } catch (error) {
     console.error(error);
@@ -69,21 +70,34 @@ router.patch('/', async (req, res, next) => {
   }
 })
 
-//DELETE/api/cart   -delete item from cart
-router.delete('/:items', async (req, res, next) => {
-  const { items } = req.params
-
-  try {
-    await removeItemFromCart(cartId, basketId);
-    res.send({ message: "Item deleted from cart." })
-    if (items.length === 0) {
-      res.send({ message: "No item to delete." });
+// DELETE/api/cart - delete item from cart
+router.delete('/:cartId/:basketId', async (req, res, next) => {
+    const { cartId, basketId } = req.params;
+  
+    try {
+      await removeItemFromCart(cartId, basketId);
+      res.send({ message: "Item deleted from cart." });
+    } catch (error) {
+      console.error(error);
+      next(error);
     }
-  } catch (error) {
-    console.error(error);
-    next(error)
-  }
-})
+  });
+  
+
+// router.delete('/:items', async (req, res, next) => {
+//   const { items } = req.params
+
+//   try {
+//     await removeItemFromCart(cartId, basketId);
+//     res.send({ message: "Item deleted from cart." })
+//     if (items.length === 0) {
+//       res.send({ message: "No item to delete." });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     next(error)
+//   }
+// })
 
 
 module.exports = router;
