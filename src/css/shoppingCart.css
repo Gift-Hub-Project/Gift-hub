@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+
+.shoppingbox {
+  border: solid 4.2px #f78764;
+  width: 300px;
+  border-radius:10px;
+  height: fit-content;
+  padding:5px;
+  display:flex;
+  margin: 8px;
+  flex-direction: column;
+  float: right;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+}

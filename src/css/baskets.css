@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
 
-.basketsbox{
+.basketsbox {
+  display:flex;
+  justify-content: center;
   font-family:'Nunito', sans-serif;
 }
+
+#basketsheadline {
+ display: flex;
+ justify-content: center;
+}
+
+

@@ -93,7 +93,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     }  
     return (
         <div className='basketsbox'>
-            <h1>Baskets</h1>
+            <h1 id='basketsheadline'>Baskets</h1>
             {baskets.map((basket) => (
                 <div key={basket.id}>
                     <h2>{basket.name}</h2>

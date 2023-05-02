@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import searchFunction from './search.js';
+import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faGift } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import '../css/header.css';
 
 const Header =({ loginOut, setLoginOut}) => {
@@ -32,6 +35,7 @@ const Header =({ loginOut, setLoginOut}) => {
         setLoginOut(false);
     };
 
+
     return (
         <div>
             <header id="header">
@@ -59,16 +63,18 @@ const Header =({ loginOut, setLoginOut}) => {
                             ))}
                         </ul>
                     )}
-                    <Link className="shopcart" to='/'>Home</Link>
-                    <Link className="shopcart" to="/shoppingcart">Shopping Cart</Link>
 
+                    <Link className="home" to='/'><FontAwesomeIcon icon={faGift}/></Link>
+                    <Link className="shopcart" to="/shoppingcart"><FontAwesomeIcon icon={faCartShopping}/></Link>
                         {
                             loginOut? (
                             <Link className="logout" to="/" onClick ={logout}>Logout</Link>
                             ) : (
                             <Link className="register" to="/login">Login/Register</Link>
+                            
                             )
                         }
+                        
                 </div>
             </header>
         </div>
