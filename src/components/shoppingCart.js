@@ -7,7 +7,7 @@ const APIURL = "http://localhost:8080";
 
 
 const ShoppingCart = ({usersCart, setUsersCart}) => {
-  const cartItems = Array.isArray(usersCart?.cartItems) ? usersCart.cartItems : [];
+  let cartItems = Array.isArray(usersCart?.cartItems) ? usersCart.cartItems : [];
   console.log(cartItems, "cart");
 //  const cartItems = usersCart?.cartItems || [];
 //  console.log(cartItems,"cart")
@@ -48,18 +48,27 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
    }
  };
 
+ const onRemoveClickItem = (itemId) => {//event.preventDefault()
+    cartItems = cartItems.filter((item)=>{
+
+      return item.id !== itemId
+    })
+    let copyUsersDeleteItems = {...usersCart};
+    copyUsersDeleteItems.cartItems = cartItems
+    setUsersCart(copyUsersDeleteItems);
+  }
 
   return (
    <div className='shoppingbox'>
      <h1>Shopping Cart</h1>
-     {cartItems && cartItems.length > 0? (
+     {cartItems && cartItems.length > 0 ? (
       <div>
         {cartItems.map((item) => (
           <div key={item.id}>
             <h2>{item.name}</h2>
             <p>Price:{item.price}</p>
             <p>Quantity: {item.quantity}</p>
-            <button onClick={() => removeCartItem(usersCart.id, item.id)}>Remove</button>
+            <button onClick={() => onRemoveClickItem(item.id)}>Remove</button>
           </div>
         ))}
         <p>Total: {total} </p>
