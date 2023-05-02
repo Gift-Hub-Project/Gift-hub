@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/shoppingCart.css';
 
 const APIURL = "http://localhost:8080";
 
@@ -46,7 +47,7 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
 
 
   return (
-   <div>
+   <div className='shoppingbox'>
      <h1>Shopping Cart</h1>
      {cartItems && cartItems.length > 0? (
       <div>
@@ -62,7 +63,8 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
         <button onClick={() => checkout(usersCart.id)}>Checkout</button>
      </div>
     ) :(
-      <p>Your cart is empty.</p>
+        <p>Your cart is empty.</p>
+                
    )}
     </div>
   );

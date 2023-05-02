@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 body {
   padding: 0;
   margin: 0;
+  background-color: #fdf9e7;
+  font-weight: bold;
 } 
 
 #header {
@@ -17,24 +19,38 @@ body {
 .headerlinks {
   font-family: 'Nunito', sans-serif;
   font-size: 18px;
-  font-weight: bolder;
+  /* font-weight: bolder; */
+}
+
+.home {
+  font-size: 20px;
+  padding-right: 16px;
+  padding-left: 45px;
+  text-decoration: none;
+  color: #fad5c7;
+}
+
+.home:hover {
+  color: #f78764;
 }
 
 .shopcart {
-  padding-right: 10px;
+  padding-right: 16px;
   text-decoration: none;
+  color: #fad5c7;
 }
 .shopcart:hover {
   text-decoration: underline;
+  color: #f78764;
 }
-.shopcart:visited {
+/* .shopcart:visited {
   color: #fad5c7;
-}
+} */
 
 .logout {
   text-decoration: none;
 }
-.logo:hover {
+.logout:hover {
   text-decoration: underline;
 }
 .logout:visited {
@@ -43,13 +59,16 @@ body {
 
 .register {
   text-decoration: none;
+  transition-duration: 0.4;
+  color: #fad5c7;
 }
 .register:hover {
   text-decoration: underline;
+  color: #f78764;
 }
-.register:visited {
+/* .register:visited {
   color: #fad5c7;
-}
+} */
 
 .logo {
   font-family: 'Dancing Script', cursive;

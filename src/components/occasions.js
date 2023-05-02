@@ -3,7 +3,7 @@ const APIURL = "http://localhost:8080";
 import { Link } from 'react-router-dom';
 import '../css/occasions.css';
 
-const AllOccasions = (props) => {
+const AllOccasions = () => {
  const [occasions, setOccasions] = useState([]);
 
  useEffect(() => {
@@ -26,13 +26,15 @@ const AllOccasions = (props) => {
 
  
  return(
+  
   <div className="occasionsbox">
+    <img id="displaypic" src="https://media.istockphoto.com/id/1390608349/photo/wicker-basket-with-gifts-wine-and-food-against-blurred-festive-lights-space-for-text.jpg?s=612x612&w=0&k=20&c=bM03O-7QqVRs3acq-bP5FLByYo5SevRnFuqrr-DTNJI="></img>
+    <h1 id="headline">Shop By Occasion</h1>
   {
     occasions.map((occasions, index) => {
       return (
       <div className="occasion" key={index}>
-       
-       <Link to={"baskets"}><h3>{occasions.name}</h3></Link> 
+       <Link className="eachoccasion" to={"baskets"}><h3>{occasions.name}</h3></Link> 
        
       </div>
       )
