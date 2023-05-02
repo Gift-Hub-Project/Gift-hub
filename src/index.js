@@ -9,6 +9,8 @@ import Baskets from "./components/baskets";
 import EditBasket from "./components/editBasket";
 import Occasions from "./components/occasions";
 import ShoppingCart from "./components/shoppingcart";
+import Checkout from "./components/checkout";
+import OrderComplete from "./components/ordercomplete";
 
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
@@ -35,7 +37,8 @@ const App = () => {
           <Route path='/editbasket' element ={<EditBasket />} />
           <Route path ='/login' element={<Login loginOut={loginOut} setLoginOut={setLoginOut}/>} /> 
           <Route path ="/shoppingCart" element = {<ShoppingCart usersCart={usersCart} setUsersCart ={setUsersCart} />} />
-
+          <Route path ='/checkout' element = {<Checkout />} />
+          <Route path ='/ordercomplete' element ={<OrderComplete />} />
         </Routes>
       </div>
     )

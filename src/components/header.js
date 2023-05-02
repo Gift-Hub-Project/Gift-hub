@@ -63,10 +63,9 @@ const Header =({ loginOut, setLoginOut}) => {
                             ))}
                         </ul>
                     )}
-                    
+
                     <Link className="home" to='/'><FontAwesomeIcon icon={faGift}/></Link>
                     <Link className="shopcart" to="/shoppingcart"><FontAwesomeIcon icon={faCartShopping}/></Link>
-
                         {
                             loginOut? (
                             <Link className="logout" to="/" onClick ={logout}>Logout</Link>

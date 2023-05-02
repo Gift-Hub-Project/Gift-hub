@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 const APIURL = "http://localhost:8080";
 import '../css/baskets.css';
 
@@ -97,7 +98,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
                 <div key={basket.id}>
                     <h2>{basket.name}</h2>
                     <p>{basket.description}</p>
-                    <button onClick={()=> onAddClick(basket.id,basket)}>Add to Cart</button>
+                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket)}>Add to Cart</button></Link>
                     {user.isAdmin && (
                       <div>
                         <button onClick={()=>editBasket(basket.id)}>Edit</button>
