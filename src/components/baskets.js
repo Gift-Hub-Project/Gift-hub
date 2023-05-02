@@ -58,8 +58,17 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     }
 
     const onAddClick = (basketId, basket) => {
-      let copyUsersCart ={...usersCart}
+      let copyUsersCart ={...usersCart};
+      // const existingItem = copyUsersCart.cartItems.find(
+      //   (item) => item.id === basketId);
+      //   console.log(item.id,"itemid")
       copyUsersCart.cartItems.push(basket)
+      
+      // if(existingItem) {
+      //   existingItem.quantity +=1;
+      // } else {
+      //   copyUsersCart.cartItems.push({ basket, quantity:1});
+      // }
       setUsersCart(copyUsersCart);
       console.log(copyUsersCart,"copyuserscart")
 

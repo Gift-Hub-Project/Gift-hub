@@ -15,7 +15,8 @@ import OrderComplete from "./components/ordercomplete";
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
     const [ user, setUser ] = useState({});
-    const [ usersCart, setUsersCart ] = useState({id:1,cartItems:[]}); //for testng, want to be an empty object
+    const [ usersCart, setUsersCart ] = useState(JSON.parse(window.localStorage.getItem("usersCart"))||{id:1,cartItems:[]}
+    ); //for testng, want to be an empty object
     // const [usersCart, setUsersCart] = useState([])
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
 
@@ -25,7 +26,11 @@ const App = () => {
         const userData = getUser(window.localStorage.getItem("token"));
         setUser(userData);
       }
-    },[])
+    },[]);
+
+    useEffect(() => {
+      window.localStorage.setItem("usersCart",JSON.stringify(usersCart));
+    },[usersCart]);
 
     return (
       <div id="app">
