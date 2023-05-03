@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
 
+#displaypic {
+  width: 100%;
+  height: 75%;
+
+}
 
 #headline {
   display: flex;
