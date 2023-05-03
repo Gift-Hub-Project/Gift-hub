@@ -11,6 +11,7 @@ import Occasions from "./components/occasions";
 import ShoppingCart from "./components/shoppingcart";
 import Checkout from "./components/checkout";
 import OrderComplete from "./components/ordercomplete";
+import Home from "./components/home";
 
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
@@ -42,9 +43,10 @@ const App = () => {
       <div id="app">
         <Header loginOut = {loginOut} setLoginOut = {setLoginOut} />
         <Routes>
-          <Route path ='/' element={<Occasions setFilteredBaskets = {setFilteredBaskets}/>} /> 
+          <Route path ='/' element ={<Home />} />
+          <Route path ='/occasions' element={<Occasions />} /> 
           <Route path ='/register' element={<Register loginOut={loginOut} setLoginOut={setLoginOut} />} />
-          <Route path ='/baskets' element ={<Baskets filteredBaskets = {filteredBaskets} user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
+          <Route path ='occasions/baskets' element ={<Baskets user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
           <Route path='/editbasket' element ={<EditBasket />} />
           <Route path ='/login' element={<Login loginOut={loginOut} setLoginOut={setLoginOut}/>} /> 
           <Route path ="/shoppingCart" element = {<ShoppingCart usersCart={usersCart} setUsersCart ={setUsersCart} />} />

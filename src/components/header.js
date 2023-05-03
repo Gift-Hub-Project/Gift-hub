@@ -4,6 +4,7 @@ import searchFunction from './search.js';
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faGift } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import '../css/header.css';
 
 const Header =({ loginOut, setLoginOut}) => {
@@ -40,7 +41,7 @@ const Header =({ loginOut, setLoginOut}) => {
     return (
         <div>
             <header id="header">
-                <span className ="logo">GiftHub</span>
+            <Link className="home" to='/'><span className ="logo">GiftHub</span></Link>
                 <div className="headerlinks">
                     <form id="search" onSubmit ={handleSearchSubmit}>
                         <label htmlFor="searchInput">
@@ -53,7 +54,7 @@ const Header =({ loginOut, setLoginOut}) => {
                             value={ searchInputQuery }
                             onChange={ handleSearchChange }
                         ></input>
-                        <button type="submit">Search</button>
+                        <button className= "searchbutton" type="submit">Search</button>
                     </form>
                     {searchResults.length > 0 && (
                         <ul id="results">
@@ -64,17 +65,19 @@ const Header =({ loginOut, setLoginOut}) => {
                             ))}
                         </ul>
                     )}
-
-                    <Link className="home" to='/'><FontAwesomeIcon icon={faGift}/></Link>
+                    <Link className="occasionslink" to='/occasions'><FontAwesomeIcon icon={faGift}/></Link>
                     <Link className="shopcart" to="/shoppingcart"><FontAwesomeIcon icon={faCartShopping}/></Link>
+                            
                         {
                             loginOut? (
-                            <Link className="logout" to="/" onClick = {logout}>Logout</Link>
+                            <Link className="logout" to="/home" onClick ={logout}>Logout</Link>
+
                             ) : (
                             <Link className="register" to="/login">Login/Register</Link>
                             
                             )
                         }
+                        <Link className="burger" to="/occasions"><FontAwesomeIcon icon={faBars}/></Link>
                         
                 </div>
             </header>

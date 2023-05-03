@@ -16,13 +16,33 @@ body {
 
 }
 
+.burger {
+  color: #fad5c7;
+  margin-left: 10px;
+}
+
+#header .burger {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #header .occasionslink, .shopcart, .register, .logout, #search {
+    display: none;
+  }
+
+  #header .burger {
+   display: block;
+   margin-right: 20px;
+  }
+
+}
+
 .headerlinks {
   font-family: 'Nunito', sans-serif;
   font-size: 18px;
-  /* font-weight: bolder; */
 }
 
-.home {
+.occasionslink {
   font-size: 20px;
   padding-right: 16px;
   padding-left: 45px;
@@ -30,7 +50,7 @@ body {
   color: #fad5c7;
 }
 
-.home:hover {
+.occasionslink:hover {
   color: #f78764;
 }
 
@@ -40,21 +60,16 @@ body {
   color: #fad5c7;
 }
 .shopcart:hover {
-  text-decoration: underline;
   color: #f78764;
 }
-/* .shopcart:visited {
-  color: #fad5c7;
-} */
 
 .logout {
   text-decoration: none;
+  color: #fad5c7;
 }
 .logout:hover {
   text-decoration: underline;
-}
-.logout:visited {
-  color: #fad5c7;
+  color: #f78764;
 }
 
 .register {
@@ -66,15 +81,20 @@ body {
   text-decoration: underline;
   color: #f78764;
 }
-/* .register:visited {
-  color: #fad5c7;
-} */
 
 .logo {
   font-family: 'Dancing Script', cursive;
   color: #fad5c7;
   font-size: 40px;
   font-weight:bold;
+}
+
+.logo:hover {
+  color: #f78764;
+}
+
+.home {
+  text-decoration: none;
 }
 
 button {

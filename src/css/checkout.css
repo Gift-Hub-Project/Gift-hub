@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+
+.checkout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 80px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.shipping {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f78764;
+  background-image: url(./images/gifthub2.png);
+  background-position: center;
+  background-size: 330px;
+  background-repeat: no-repeat;
+  border: 4.2px #fad5c7;
+  border-style: solid;
+  border-radius: 30px;
+  width: 550px;
+  padding: 90px;
+  margin-top: -60px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.creditcard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f78764;
+  background-image: url(./images/gifthub2.png);
+  background-position: center;
+  background-size: 330px;
+  background-repeat: no-repeat;
+  border: 4.2px #fad5c7;
+  border-style: solid;
+  border-radius: 30px;
+  width: 550px;
+  padding: 90px;
+  margin: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.address {
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: none none ridge none ;
+}
+
+.city {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.state {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.zip {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+.city {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.number {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.expire{
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.code {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.cardzip {
+  margin-top: 4px;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}

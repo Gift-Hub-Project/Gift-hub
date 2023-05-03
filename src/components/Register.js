@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import registerNewUser from '../ajaxHelpers/users';
+import '../css/register.css';
 
 const Register = ({setLoginOut}) => {
 
@@ -34,15 +35,15 @@ const Register = ({setLoginOut}) => {
   
     return (
         <div id='register'>
-          <header>
+          <form className ="registerform" onSubmit= {handleSubmit}>
+          <header className="registerhead">
             Register Here
           </header>
-          <form onSubmit= {handleSubmit}>
-          <input onChange = {handleChange} placeholder="Username" value={username} />
-          <input onChange = {handleChange} placeholder="Password" value={password} />
-          <input onChange = {handleChange} placeholder = "Confirm Password" value={confirmPassword} />
-          <input onChange = {handleChange} placeholder = "Email Address" value={email} />
-          <button onClick = {handleSubmit} type= 'submit' >Submit</button>
+          <input className ="regisuser" onChange = {handleChange} placeholder="Username" value={username} />
+          <input className ="regispass" onChange = {handleChange} placeholder="Password" value={password} />
+          <input className ="regisconfirm" onChange = {handleChange} placeholder = "Confirm Password" value={confirmPassword} />
+          <input className = "email" onChange = {handleChange} placeholder = "Email Address" value={email} />
+          <button className = "regisbutton" type= 'submit' >Submit</button>
           <p className='text-danger' >{registrationErrorMessage}</p>
           </form>
         </div>

@@ -22,6 +22,7 @@ const Login = ({setLoginOut}) =>{
     else if(usernameInput !== '' && passwordInput === '') setErrorMessage('Please enter password');
     else if(usernameInput !== '' && passwordInput !== '' && !window.localStorage.getItem('token')){
       userLogin(usernameInput, passwordInput, setLoginOut, navigate, setErrorMessage)
+      window.location.replace('/');
     }
   }
 

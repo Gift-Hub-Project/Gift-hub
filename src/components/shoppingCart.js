@@ -54,11 +54,11 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
           <div key={item.id}>
             <h2>{item.name}</h2>
             <p>Price:{item.price}</p>
-            <p>Quantity: {item.quantity}</p>
-            <button onClick={() => onRemoveClickItem(item.id)}>Remove</button>
+            
+            <p>Quantity: {item.quantity}<button onClick={() => onRemoveClickItem(item.id)}>X</button></p>
           </div>
         ))}
-        <p>Total: {total} </p>
+        <p className = "seperatetotal">Total: {total} </p>
         <Link to='/checkout'><button >Checkout</button> </Link>
      </div>
     ) :(
