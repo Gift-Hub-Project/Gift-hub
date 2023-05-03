@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+
+#register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 80px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.registerform {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f78764;
+  background-image: url(./images/gifthub2.png);
+  background-size: 330px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 4.2px #fad5c7;
+  border-style: solid;
+  border-radius: 30px;
+  padding: 40px;
+  margin: 10px;
+}
+
+.registerhead{
+  padding-bottom: 30px;
+  font-size: 20px;
+
+}
+
+.regisuser {
+  width: 250px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: none none ridge none ;
+}
+
+.regispass {
+  margin-top: 4px;
+  width: 250px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.regisconfirm {
+  margin-top: 4px;
+  width: 250px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.email {
+  margin-top: 4px;
+  width: 250px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
+.regisbutton {
+  margin-top: 10px;
+  width: 70px;
+}
