@@ -58,6 +58,9 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     }
 
     const onAddClick = (basketId, basket) => {
+
+      const [addedToCart, setAddedToCart] = useState(false);
+
       let copyUsersCart ={...usersCart};
       // const existingItem = copyUsersCart.cartItems.find(
       //   (item) => item.id === basketId);
@@ -70,6 +73,8 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       //   copyUsersCart.cartItems.push({ basket, quantity:1});
       // }
       setUsersCart(copyUsersCart);
+      setAddedToCart(true);
+      alert('Item added to cart!');
       console.log(copyUsersCart,"copyuserscart")
 
       //logic to grab/create cart
@@ -107,7 +112,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
                 <div key={basket.id}>
                     <h2>{basket.name}</h2>
                     <p>{basket.description}</p>
-                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket)}>Add to Cart</button></Link>
+                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket) }>Add to Cart</button></Link>
                     {user.isAdmin && (
                       <div>
                         <button onClick={()=>editBasket(basket.id)}>Edit</button>
