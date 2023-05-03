@@ -3,6 +3,7 @@ const { createUser } = require('./users');
 const { createOccasion} = require('./occasions');
 const { createBasket } = require('./baskets');
 const { createCart } = require('./usersCart');
+const { addItemToCart } = require('./cart_baskets');
 const dropTables = async () => {
   try {
     console.log("DROPPING ALL TABLES...")
@@ -77,7 +78,7 @@ const createInitialUsers = async () => {
   console.log("STARTING TO CREATE USERS...")
   try {
     const usersToCreate = [
-      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com", isAdmin: true },
+      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com", isAdmin: true, isLoggedIn: true },
       { username: "alice", password: "alicat7", address: "wonderland", email: "alice@wonderland.com", isAdmin: false },
       { username: "bob", password: "bobert007", address: "County lock up", email: "bob@cell4.com", isAdmin: false },
     ]
@@ -213,21 +214,28 @@ const createBaskets = async () => {
 
 const createInitialCartBasketIds = async () => {
   console.log("STARTING TO CREATE CART_BASKETS ID TABLE");
-    try {
+  try {
+    const cartBasketIdsToCreate = [
+      { cartId: 1, basketId: 2, numberOfItems: 2 },
+      { cartId: 1, basketId: 1, numberOfItems: 2 }, 
+      { cartId: 1, basketId: 3, numberOfItems: 2 }, 
+      { cartId: 3, basketId: 1, numberOfItems: 2 },
+      { cartId: 2, basketId: 3, numberOfItems: 1 },
+    ]
 
-  const cartBasketIdsToCreate = [
-    { occasionId: 1, basketId: 2 },
-    { occasionId: 3, basketId: 1 },
-    { occasionId: 2, basketId: 3 },
-  ]
-  const cartBasket = await Promise.all(cartBasketIdsToCreate.map(createInitialCartBasketId))
-
+  const cartBasket = await Promise.all(cartBasketIdsToCreate.map(value => {
+    return addItemToCart(
+      value.cartId, 
+      value.basketId,
+      value.numberOfItems
+    )
+  }));
   console.log('CART_BASKETS table ids created:');
   console.log(cartBasket);
   console.log("Finished creating CART_BASKETS Id table!");
+
 } catch(err) {
   console.error("ERROR CREATING CART_BASKETS ID", err)
-
 }
 
 }

@@ -34,6 +34,7 @@ const Header =({ loginOut, setLoginOut}) => {
     const logout = () => {
         window.localStorage.getItem("token");
         setLoginOut(false);
+        //location.reload(true);
     };
 
 
@@ -70,6 +71,7 @@ const Header =({ loginOut, setLoginOut}) => {
                         {
                             loginOut? (
                             <Link className="logout" to="/home" onClick ={logout}>Logout</Link>
+
                             ) : (
                             <Link className="register" to="/login">Login/Register</Link>
                             

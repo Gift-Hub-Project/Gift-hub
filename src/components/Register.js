@@ -32,10 +32,6 @@ const Register = ({setLoginOut}) => {
         registerNewUser(username, password, email, setLoginOut, navigate, setRegistrationErrorMessage)
       }
     }
-   
-  
-  
-  
   
     return (
         <div id='register'>
