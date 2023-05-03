@@ -15,13 +15,17 @@ import OrderComplete from "./components/ordercomplete";
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
     const [ user, setUser ] = useState({});
-    const [ usersCart, setUsersCart ] = useState(JSON.parse(window.localStorage.getItem("usersCart"))||{id:1,cartItems:[]}
+    const [ usersCart, setUsersCart ] = useState(JSON.parse(window.localStorage.getItem("usersCart")) ||{id:1,updatedCart:[]}
     ); //for testng, want to be an empty object
     // const [usersCart, setUsersCart] = useState([])
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
-    const [ filteredBaskets, setFilteredBaskets ] = useState([]);
 
 
+    useEffect (()=>{
+    //if user has cart in database, grab it. if not, create cart.
+    //create/get cart logic
+    },[token])
+    
     useEffect(()=>{
       if(window.localStorage.getItem("token")) {
         const userData = getUser(window.localStorage.getItem("token"));
@@ -37,9 +41,9 @@ const App = () => {
       <div id="app">
         <Header loginOut = {loginOut} setLoginOut = {setLoginOut} />
         <Routes>
-          <Route path ='/' element={<Occasions setFilteredBaskets = {setFilteredBaskets}/>} /> 
+          <Route path ='/' element={<Occasions />} /> 
           <Route path ='/register' element={<Register loginOut={loginOut} setLoginOut={setLoginOut} />} />
-          <Route path ='/baskets' element ={<Baskets filteredBaskets = {filteredBaskets} user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
+          <Route path ='/baskets' element ={<Baskets user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
           <Route path='/editbasket' element ={<EditBasket />} />
           <Route path ='/login' element={<Login loginOut={loginOut} setLoginOut={setLoginOut}/>} /> 
           <Route path ="/shoppingCart" element = {<ShoppingCart usersCart={usersCart} setUsersCart ={setUsersCart} />} />

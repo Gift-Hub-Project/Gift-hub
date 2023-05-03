@@ -4,9 +4,8 @@ const APIURL = "http://localhost:8080";
 import '../css/baskets.css';
 
 
-const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaskets }) => {
+const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     const [baskets, setBaskets] = useState([]);
-    
 
     useEffect(() => {
         fetchBaskets();
@@ -23,23 +22,34 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
         }
     };
 
-    const addToCart = async(basketId, numberOfItems) => {
+    const addToCart = async(basketId) => {
       const userId = user.id;
       try{
-        const response = await fetch(`${APIURL}/api/userscart`, {
+        const response = await fetch(`${APIURL}/api/userscart/addItem/${usersCart.id}/${basketId}`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
           },
-          body: JSON.stringify({ userId, basketId, numberOfItems}),
         });
         const data = await response.json()
-          setUsersCart(data)
       } catch (error) {
         console.error('Error adding basket to cart:', error)
       }
     };
-
+    const updateCartQuantity = async(basketId) => {
+      const userId = user.id;
+      try{
+        const response = await fetch(`${APIURL}/api/userscart/updateAddItem/${usersCart.id}/${basketId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type' : 'application/json',
+          },
+        });
+        const data = await response.json()
+      } catch (error) {
+        console.error('Error adding basket to cart:', error)
+      }
+    };
     const createCart = async (token) => {
       try { //need to be updated with post createcart function
         let response = await fetch(`${APIURL}/api/userscart`,{
@@ -58,25 +68,24 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
       }
     }
 
-    const onAddClick = (basketId, basket) => {
-
-      const [addedToCart, setAddedToCart] = useState(false);
-
+    const onAddClick = async (basketId, basket) => {
       let copyUsersCart ={...usersCart};
-      // const existingItem = copyUsersCart.cartItems.find(
-      //   (item) => item.id === basketId);
-      //   console.log(item.id,"itemid")
-      copyUsersCart.cartItems.push(basket)
+
+      if (!Array.isArray(copyUsersCart.updatedCart)) {
+        copyUsersCart.updatedCart =[];
+      }
+      const existingItem = copyUsersCart.updatedCart.find(
+        (item) => item.id === basketId);
       
-      // if(existingItem) {
-      //   existingItem.quantity +=1;
-      // } else {
-      //   copyUsersCart.cartItems.push({ basket, quantity:1});
-      // }
+      if(existingItem) {
+        existingItem.quantity += 1;
+        await updateCartQuantity(basketId, existingItem.quantity);
+      } else {
+        copyUsersCart.updatedCart.push(basket);
+      
       setUsersCart(copyUsersCart);
-      setAddedToCart(true);
-      alert('Item added to cart!');
-      console.log(copyUsersCart,"copyuserscart")
+      await addToCart(basketId,basket.quantity)
+    }
 
       //logic to grab/create cart
       // if(!usersCart.id){
@@ -86,7 +95,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
       //   addToCart(basketId, 1);
       //invoke add to cart function 
       //logic to add basket to cart
-    }
+    };
 
     const editBasket =(basketId) => {
       window.location.href =`/baskets/edit/${basketId}`
@@ -94,14 +103,13 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
 
     const deleteBasket = async (basketId) => {
       try{
-        const response = await fetch(`/${APIURL}/api/baskets/${basketId}`,{
+        const response = await fetch(`/${APIURL}/api/usersCart/removeItem/${usersCart.id}/${basketId}`,{
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           }
         });
         const data = await response.json();
-        setBaskets(data)
       } catch (error) {
         console.error('ERROR deleting basket:', error)
       }
@@ -109,11 +117,11 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
     return (
         <div className='basketsbox'>
             <h1 id='basketsheadline'>Baskets</h1>
-            {filteredBaskets.map((basket) => (
+            {baskets.map((basket) => (
                 <div key={basket.id}>
                     <h2>{basket.name}</h2>
                     <p>{basket.description}</p>
-                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket) }>Add to Cart</button></Link>
+                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket)}>Add to Cart</button></Link>
                     {user.isAdmin && (
                       <div>
                         <button onClick={()=>editBasket(basket.id)}>Edit</button>
