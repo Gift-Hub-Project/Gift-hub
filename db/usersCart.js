@@ -5,13 +5,12 @@ const createCart = async (
   userId,
   isPurchased
 ) => {
-  try { 
-    const { rows: [ usersCart ] } = await client.query(`
+  try {
+    const { rows: [usersCart] } = await client.query(`
     INSERT INTO cart("isLoggedIn", "userId", "isPurchased")
     VALUES($1, $2, $3)
     RETURNING *;
-    `, [ isLoggedIn, userId, isPurchased ]);
-    
+    `, [isLoggedIn, userId, isPurchased]);
     return usersCart;
   } catch (err) {
     console.error(err);
@@ -20,23 +19,20 @@ const createCart = async (
 }
 
 const updateCart = async (cartId) => {
- try {
-  await client.query(`
+  try {
+    await client.query(`
   UPDATE cart
   SET "isPurchased"=true;
   WHERE "cartId"=$1
   RETURNING *;
-  `,[cartId]);
-
-  return;
- }catch (error) {
-  console.error(err);
-  throw err;
- }
+  `, [cartId]);
+    return;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-const getAllCarts = async (isPurchased, userId) => { //implement requireUser for this one in API
-  
+const getAllCarts = async (isPurchased, userId) => {
   try {
     const { rows: allPurchasedCarts } = await client.query(`
     SELECT * 
@@ -47,29 +43,48 @@ const getAllCarts = async (isPurchased, userId) => { //implement requireUser for
     ` [userId, isPurchased])
 
     return allPurchasedCarts
-  } catch(err){
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 }
 
 const getCartById = async (cartId) => {
-
   try {
-    const {rows: [cart] } = await client.query(`
+    const { rows: [cart] } = await client.query(`
     SELECT *
     FROM cart
     WHERE "cartId"=$1
     RETURNING *;
-    `,[cartId])
+    `, [cartId])
     return cart;
-  } catch(err){
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 
 }
+
+const createGuestCart = async (
+  isLoggedIn,
+  isPurchased
+) => {
+  try {
+    const { rows: [usersCart] } = await client.query(`
+    INSERT INTO cart("isLoggedIn", "isPurchased")
+    VALUES($1, $2)
+    RETURNING *;
+    `, [isLoggedIn, isPurchased]);
+
+    return usersCart;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 module.exports = {
   createCart,
   updateCart,
   getCartById,
-  getAllCarts
+  getAllCarts,
+  createGuestCart
 }
