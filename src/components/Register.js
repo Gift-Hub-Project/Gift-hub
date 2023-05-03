@@ -31,6 +31,10 @@ const Register = ({setLoginOut}) => {
         registerNewUser(username, password, email, setLoginOut, navigate, setRegistrationErrorMessage)
       }
     }
+   
+  
+  
+  
   
     return (
         <div id='register'>
@@ -42,7 +46,7 @@ const Register = ({setLoginOut}) => {
           <input onChange = {handleChange} placeholder="Password" value={password} />
           <input onChange = {handleChange} placeholder = "Confirm Password" value={confirmPassword} />
           <input onChange = {handleChange} placeholder = "Email Address" value={email} />
-          <button onClick = {handleSubmit} type= 'submit' >Submit</button>
+          <button type= 'submit' >Submit</button>
           <p className='text-danger' >{registrationErrorMessage}</p>
           </form>
         </div>
