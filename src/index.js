@@ -15,12 +15,17 @@ import OrderComplete from "./components/ordercomplete";
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
     const [ user, setUser ] = useState({});
-    const [ usersCart, setUsersCart ] = useState(JSON.parse(window.localStorage.getItem("usersCart"))||{id:1,cartItems:[]}
+    const [ usersCart, setUsersCart ] = useState(JSON.parse(window.localStorage.getItem("usersCart")) ||{id:1,updatedCart:[]}
     ); //for testng, want to be an empty object
     // const [usersCart, setUsersCart] = useState([])
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
 
 
+    useEffect (()=>{
+    //if user has cart in database, grab it. if not, create cart.
+    //create/get cart logic
+    },[token])
+    
     useEffect(()=>{
       if(window.localStorage.getItem("token")) {
         const userData = getUser(window.localStorage.getItem("token"));
