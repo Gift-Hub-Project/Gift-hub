@@ -32,7 +32,6 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
           },
         });
         const data = await response.json()
-          console.log('updated ')
       } catch (error) {
         console.error('Error adding basket to cart:', error)
       }
@@ -47,7 +46,6 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
           },
         });
         const data = await response.json()
-          console.log('updated ')
       } catch (error) {
         console.error('Error adding basket to cart:', error)
       }
@@ -71,22 +69,18 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     }
 
     const onAddClick = async (basketId, basket) => {
-      console.log("users cart", usersCart);
       let copyUsersCart ={...usersCart};
 
       if (!Array.isArray(copyUsersCart.updatedCart)) {
         copyUsersCart.updatedCart =[];
       }
-      console.log("copyuserscart", copyUsersCart)
       const existingItem = copyUsersCart.updatedCart.find(
         (item) => item.id === basketId);
-      // copyUsersCart.cartItems.push(basket)
       
       if(existingItem) {
         existingItem.quantity += 1;
         await updateCartQuantity(basketId, existingItem.quantity);
       } else {
-        // const newItem = { basket, quantity:1}
         copyUsersCart.updatedCart.push(basket);
       
       setUsersCart(copyUsersCart);

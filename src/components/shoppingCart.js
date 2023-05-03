@@ -8,15 +8,12 @@ const APIURL = "http://localhost:8080";
 
 const ShoppingCart = ({usersCart, setUsersCart}) => {
   let cartItems = Array.isArray(usersCart?.updatedCart) ? usersCart.updatedCart : [];
-//  let cartItems = usersCart?.updatedCart || usersCart?.cartItems ||[];
- console.log(cartItems, "cartItems", typeof cartItems)
  const total = cartItems?.reduce(
   (acc,item) => {
     return acc + item.quantity * item.price
   }, 0);
  
   const removeCartItem = async (cartId, basketId) => {
-    console.log("Request body:", { cartId, basketId });
 
     try {
      const response = await fetch(`${APIURL}/api/usersCart/removeItem/${cartId}/${basketId}`, {
@@ -33,8 +30,6 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
     }
   };
   const onRemoveClickItem = async ( basketId) => {//event.preventDefault()
-    console.log("userscartid", usersCart.id);
-    // console.log('onremoveclickeditem called with itemId:',itemId, "and basketId", basketId);
    const message = await removeCartItem( usersCart.id,basketId);  
    
    if(message === "Item(s) of basketid deleted from cart!") {
