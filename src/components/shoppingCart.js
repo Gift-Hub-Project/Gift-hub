@@ -26,10 +26,8 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
     //  },
     //  body:JSON.stringify({ cartId, basketId } ),
       });
-      const data = await response.json();
-      console.log('Updated cart in removeCartItem:', data.updatedCart);
-      
-      return data.updatedCart;
+      const data = await response.json();      
+      return data.message;
     } catch (error) {
       console.error('Error removing item from cart:', error);
     }
@@ -37,15 +35,19 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
   const onRemoveClickItem = async ( basketId) => {//event.preventDefault()
     console.log("userscartid", usersCart.id);
     // console.log('onremoveclickeditem called with itemId:',itemId, "and basketId", basketId);
-   const updatedCart = await removeCartItem( usersCart.id,basketId);  
+   const message = await removeCartItem( usersCart.id,basketId);  
    
-   if(updatedCart) {
-    setUsersCart({...usersCart, updatedCart });
-    console.log('Updated cart in onRemoveClickItem:', updatedCart);
-  
-   } else{
-    console.error("Error updating cart after removing item");
-   } return updatedCart;
+   if(message === "Item(s) of basketid deleted from cart!") {
+    //manipulate front end
+    let copyUsersCart = {...usersCart};
+   
+    copyUsersCart.updatedCart=copyUsersCart.updatedCart.filter((basket)=>{
+      return basket.id !== basketId
+    })
+    setUsersCart(copyUsersCart);
+   } else {
+    console.error(error)
+   }
     };
 
   return (

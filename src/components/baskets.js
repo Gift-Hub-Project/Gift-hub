@@ -22,24 +22,36 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
         }
     };
 
-    const addToCart = async(basketId, numberOfItems) => {
+    const addToCart = async(basketId) => {
       const userId = user.id;
       try{
-        const response = await fetch(`${APIURL}/api/userscart`, {
+        const response = await fetch(`${APIURL}/api/userscart/addItem/${usersCart.id}/${basketId}`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
           },
-          body: JSON.stringify({ userId, basketId, numberOfItems}),
         });
         const data = await response.json()
-          setUsersCart(data);
           console.log('updated ')
       } catch (error) {
         console.error('Error adding basket to cart:', error)
       }
     };
-
+    const updateCartQuantity = async(basketId) => {
+      const userId = user.id;
+      try{
+        const response = await fetch(`${APIURL}/api/userscart/updateAddItem/${usersCart.id}/${basketId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type' : 'application/json',
+          },
+        });
+        const data = await response.json()
+          console.log('updated ')
+      } catch (error) {
+        console.error('Error adding basket to cart:', error)
+      }
+    };
     const createCart = async (token) => {
       try { //need to be updated with post createcart function
         let response = await fetch(`${APIURL}/api/userscart`,{
@@ -72,7 +84,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       
       if(existingItem) {
         existingItem.quantity += 1;
-        await addToCart(basketId, existingItem.quantity);
+        await updateCartQuantity(basketId, existingItem.quantity);
       } else {
         // const newItem = { basket, quantity:1}
         copyUsersCart.updatedCart.push(basket);
@@ -97,14 +109,13 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
 
     const deleteBasket = async (basketId) => {
       try{
-        const response = await fetch(`/${APIURL}/api/baskets/${basketId}`,{
+        const response = await fetch(`/${APIURL}/api/usersCart/removeItem/${usersCart.id}/${basketId}`,{
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           }
         });
         const data = await response.json();
-        setBaskets(data)
       } catch (error) {
         console.error('ERROR deleting basket:', error)
       }

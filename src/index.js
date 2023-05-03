@@ -21,6 +21,11 @@ const App = () => {
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
 
 
+    useEffect (()=>{
+    //if user has cart in database, grab it. if not, create cart.
+    //create/get cart logic
+    },[token])
+    
     useEffect(()=>{
       if(window.localStorage.getItem("token")) {
         const userData = getUser(window.localStorage.getItem("token"));
