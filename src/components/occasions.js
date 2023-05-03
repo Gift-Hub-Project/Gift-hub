@@ -11,9 +11,7 @@ const AllOccasions = () => {
   const getAllOccasions = async() => {
     try {
       const response = await fetch(`${APIURL}/api/occasions`);
-      console.log("RESPONSE", response);
       const result = await response.json();
-      console.log(result);
       setOccasions(result);
       return result
     } catch (err) {

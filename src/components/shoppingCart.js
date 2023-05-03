@@ -7,56 +7,46 @@ const APIURL = "http://localhost:8080";
 
 
 const ShoppingCart = ({usersCart, setUsersCart}) => {
-  let cartItems = Array.isArray(usersCart?.cartItems) ? usersCart.cartItems : [];
-  console.log(cartItems, "cart");
-//  const cartItems = usersCart?.cartItems || [];
-//  console.log(cartItems,"cart")
+  let cartItems = Array.isArray(usersCart?.updatedCart) ? usersCart.updatedCart : [];
+//  let cartItems = usersCart?.updatedCart || usersCart?.cartItems ||[];
+ console.log(cartItems, "cartItems", typeof cartItems)
  const total = cartItems?.reduce(
   (acc,item) => {
-    console.log(item.quantity, item.price,acc, "help")
     return acc + item.quantity * item.price
   }, 0);
-
-
- const addToCart = async (basketId, numberOfItems) => {
-   try {
-    const response = await fetch(`${APIURL}/api/userscart/${usersCart.id}/${basketId}`, {
-      method: 'PATCH',
-       headers: {
-       'Content-Type': 'application/json'
-       },
-      body: JSON.stringify({ numberOfItems })
-     });
-     const data = await response.json();
-     setUsersCart(data);
-   } catch (error) {
-     console.error('Error adding item to cart:', error);
-  }
- };
+ 
   const removeCartItem = async (cartId, basketId) => {
-   try {
-    const response = await fetch(`${APIURL}/api/userscart/deleteItem`, {
-      method: 'DELETE',
-       headers: {
-       'Content-Type': 'application/json'
+    console.log("Request body:", { cartId, basketId });
+
+    try {
+     const response = await fetch(`${APIURL}/api/usersCart/removeItem/${cartId}/${basketId}`, {
+       method: 'DELETE',
+        // headers: {
+        // 'Content-Type': 'application/json',
+    //  },
+    //  body:JSON.stringify({ cartId, basketId } ),
+      });
+      const data = await response.json();
+      console.log('Updated cart in removeCartItem:', data.updatedCart);
+      
+      return data.updatedCart;
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
     }
-     });
-     const data = await response.json();
-     setUsersCart(data);
-   } catch (error) {
-     console.error('Error removing item from cart:', error);
-   }
- };
-
- const onRemoveClickItem = (itemId) => {//event.preventDefault()
-    cartItems = cartItems.filter((item)=>{
-
-      return item.id !== itemId
-    })
-    let copyUsersDeleteItems = {...usersCart};
-    copyUsersDeleteItems.cartItems = cartItems
-    setUsersCart(copyUsersDeleteItems);
-  }
+  };
+  const onRemoveClickItem = async ( basketId) => {//event.preventDefault()
+    console.log("userscartid", usersCart.id);
+    // console.log('onremoveclickeditem called with itemId:',itemId, "and basketId", basketId);
+   const updatedCart = await removeCartItem( usersCart.id,basketId);  
+   
+   if(updatedCart) {
+    setUsersCart({...usersCart, updatedCart });
+    console.log('Updated cart in onRemoveClickItem:', updatedCart);
+  
+   } else{
+    console.error("Error updating cart after removing item");
+   } return updatedCart;
+    };
 
   return (
    <div className='shoppingbox'>

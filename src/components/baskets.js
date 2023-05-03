@@ -33,7 +33,8 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
           body: JSON.stringify({ userId, basketId, numberOfItems}),
         });
         const data = await response.json()
-          setUsersCart(data)
+          setUsersCart(data);
+          console.log('updated ')
       } catch (error) {
         console.error('Error adding basket to cart:', error)
       }
@@ -57,20 +58,28 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       }
     }
 
-    const onAddClick = (basketId, basket) => {
+    const onAddClick = async (basketId, basket) => {
+      console.log("users cart", usersCart);
       let copyUsersCart ={...usersCart};
-      // const existingItem = copyUsersCart.cartItems.find(
-      //   (item) => item.id === basketId);
-      //   console.log(item.id,"itemid")
-      copyUsersCart.cartItems.push(basket)
+
+      if (!Array.isArray(copyUsersCart.updatedCart)) {
+        copyUsersCart.updatedCart =[];
+      }
+      console.log("copyuserscart", copyUsersCart)
+      const existingItem = copyUsersCart.updatedCart.find(
+        (item) => item.id === basketId);
+      // copyUsersCart.cartItems.push(basket)
       
-      // if(existingItem) {
-      //   existingItem.quantity +=1;
-      // } else {
-      //   copyUsersCart.cartItems.push({ basket, quantity:1});
-      // }
+      if(existingItem) {
+        existingItem.quantity += 1;
+        await addToCart(basketId, existingItem.quantity);
+      } else {
+        // const newItem = { basket, quantity:1}
+        copyUsersCart.updatedCart.push(basket);
+      
       setUsersCart(copyUsersCart);
-      console.log(copyUsersCart,"copyuserscart")
+      await addToCart(basketId,basket.quantity)
+    }
 
       //logic to grab/create cart
       // if(!usersCart.id){
@@ -80,7 +89,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
       //   addToCart(basketId, 1);
       //invoke add to cart function 
       //logic to add basket to cart
-    }
+    };
 
     const editBasket =(basketId) => {
       window.location.href =`/baskets/edit/${basketId}`
