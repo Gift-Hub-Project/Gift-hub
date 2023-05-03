@@ -3,7 +3,7 @@ const APIURL = "http://localhost:8080";
 import { Link } from 'react-router-dom';
 import '../css/occasions.css';
 
-const AllOccasions = ({setFilteredBaskets}) => {
+const AllOccasions = () => {
  const [occasions, setOccasions] = useState([]);
 
  useEffect(() => {
@@ -21,21 +21,7 @@ const AllOccasions = ({setFilteredBaskets}) => {
   getAllOccasions();
  }, [])
 
-const getBasketsByOccasionId = async(occasionId) => {
-  try{
-    const response = await fetch(`${APIURL}/api/baskets/${occasionId}`);
-    const result = await response.json();
-    setFilteredBaskets(result);
-    return result
-  } catch (err){
-    console.error(err)
-  }
-};
 
-const onClickHandler = (occasionId) => {
-  let result = getBasketsByOccasionId(occasionId);
-  console.log(result)
-};
  
  return(
   
@@ -46,9 +32,8 @@ const onClickHandler = (occasionId) => {
     occasions.map((occasions, index) => {
       return (
       <div className="occasion" key={index}>
-       <Link onClick = {() => {
-        onClickHandler(occasions.id)
-       }} className="eachoccasion" to={"baskets"}><h3>{occasions.name}</h3></Link>       
+       <Link className="eachoccasion" to={"baskets"}><h3>{occasions.name}</h3></Link> 
+       
       </div>
       )
     })

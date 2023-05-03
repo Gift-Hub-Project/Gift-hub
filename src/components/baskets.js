@@ -4,9 +4,8 @@ const APIURL = "http://localhost:8080";
 import '../css/baskets.css';
 
 
-const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaskets }) => {
+const Baskets = ({ user, usersCart, setUsersCart, token, setToken }) => {
     const [baskets, setBaskets] = useState([]);
-    
 
     useEffect(() => {
         fetchBaskets();
@@ -69,10 +68,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
       }
     }
 
-
-    const onAddClick = (basketId, basket) => {
-
-      const [addedToCart, setAddedToCart] = useState(false);
+    const onAddClick = async (basketId, basket) => {
       let copyUsersCart ={...usersCart};
 
       if (!Array.isArray(copyUsersCart.updatedCart)) {
@@ -88,9 +84,6 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
         copyUsersCart.updatedCart.push(basket);
       
       setUsersCart(copyUsersCart);
-
-      setAddedToCart(true);
-      alert('Item added to cart!');
       await addToCart(basketId,basket.quantity)
     }
 
@@ -124,11 +117,11 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
     return (
         <div className='basketsbox'>
             <h1 id='basketsheadline'>Baskets</h1>
-            {filteredBaskets.map((basket) => (
+            {baskets.map((basket) => (
                 <div key={basket.id}>
                     <h2>{basket.name}</h2>
                     <p>{basket.description}</p>
-                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket) }>Add to Cart</button></Link>
+                    <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket)}>Add to Cart</button></Link>
                     {user.isAdmin && (
                       <div>
                         <button onClick={()=>editBasket(basket.id)}>Edit</button>
