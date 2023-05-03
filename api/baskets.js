@@ -6,7 +6,7 @@ const {
     getBasketByName, 
     updateBasket,
     destroyBasket,
-    // getBasketsByOccasionId
+    getBasketsByOccasionId
 } = require('../db');
 const { adminToken } = require('./utils');
 const router = express.Router();

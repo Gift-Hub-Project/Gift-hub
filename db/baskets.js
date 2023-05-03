@@ -92,11 +92,25 @@ const destroyBasket = async(id) => {
     }
 };
 
+const getBasketsByOccasionId = async (occasionId) => {
+    try {
+    const { rows: baskets } = await client.query(`
+            SELECT * FROM baskets
+            WHERE "occasionId" = $1
+        `, [occasionId]);
+        return baskets
+    }catch (error) {
+        console.error(error)
+        throw error;
+    }
+};
+
 module.exports = {
     createBasket,
     getAllBaskets,
     getBasketById,
     getBasketByName,
     updateBasket,
-    destroyBasket
+    destroyBasket,
+    getBasketsByOccasionId
 };
