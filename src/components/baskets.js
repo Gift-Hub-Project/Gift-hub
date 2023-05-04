@@ -71,8 +71,6 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
 
 
     const onAddClick = async(basketId, basket) => {
-
-      const [addedToCart, setAddedToCart] = useState(false);
       let copyUsersCart ={...usersCart};
 
       if (!Array.isArray(copyUsersCart.updatedCart)) {
@@ -86,10 +84,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
         await updateCartQuantity(basketId, existingItem.quantity);
       } else {
         copyUsersCart.updatedCart.push(basket);
-      
       setUsersCart(copyUsersCart);
-
-      setAddedToCart(true);
       alert('Item added to cart!');
       await addToCart(basketId,basket.quantity)
     }
