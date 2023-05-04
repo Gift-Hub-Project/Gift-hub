@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import registerNewUser from '../ajaxHelpers/users';
-import '../css/register.css';
 
 const Register = ({setLoginOut}) => {
 
@@ -32,18 +31,22 @@ const Register = ({setLoginOut}) => {
         registerNewUser(username, password, email, setLoginOut, navigate, setRegistrationErrorMessage)
       }
     }
+   
+  
+  
+  
   
     return (
         <div id='register'>
-          <form className ="registerform" onSubmit= {handleSubmit}>
-          <header className="registerhead">
+          <header>
             Register Here
           </header>
-          <input className ="regisuser" onChange = {handleChange} placeholder="Username" value={username} />
-          <input className ="regispass" onChange = {handleChange} placeholder="Password" value={password} />
-          <input className ="regisconfirm" onChange = {handleChange} placeholder = "Confirm Password" value={confirmPassword} />
-          <input className = "email" onChange = {handleChange} placeholder = "Email Address" value={email} />
-          <button className = "regisbutton" type= 'submit' >Submit</button>
+          <form onSubmit= {handleSubmit}>
+          <input onChange = {handleChange} placeholder="Username" value={username} />
+          <input onChange = {handleChange} placeholder="Password" value={password} />
+          <input onChange = {handleChange} placeholder = "Confirm Password" value={confirmPassword} />
+          <input onChange = {handleChange} placeholder = "Email Address" value={email} />
+          <button type= 'submit' >Submit</button>
           <p className='text-danger' >{registrationErrorMessage}</p>
           </form>
         </div>

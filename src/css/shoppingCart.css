@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
 
 .shoppingbox {
-  box-shadow: 1px 1px 2px 1px #b86f52;
-  border: ridge 4.2px white;
-  background-color: #fefcf3;
+  border: solid 4.2px #f78764;
   width: 300px;
   border-radius:10px;
   height: fit-content;
@@ -14,9 +12,4 @@
   float: right;
   text-align: center;
   font-family: 'Nunito', sans-serif;
-}
-
-.seperatetotal {
-  border-style: solid none none;
-  color: black
 }

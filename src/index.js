@@ -11,7 +11,6 @@ import Occasions from "./components/occasions";
 import ShoppingCart from "./components/shoppingcart";
 import Checkout from "./components/checkout";
 import OrderComplete from "./components/ordercomplete";
-import Home from "./components/home";
 
 const App = () => {
     const [ loginOut, setLoginOut ] = useState(window.localStorage.getItem("token"));
@@ -20,7 +19,6 @@ const App = () => {
     ); //for testng, want to be an empty object
     // const [usersCart, setUsersCart] = useState([])
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
-    const [ filteredBaskets, setFilteredBaskets ] = useState([]);
 
 
     useEffect (()=>{
