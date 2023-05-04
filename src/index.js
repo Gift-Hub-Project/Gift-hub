@@ -44,9 +44,9 @@ const App = () => {
         <Header loginOut = {loginOut} setLoginOut = {setLoginOut} />
         <Routes>
           <Route path ='/' element ={<Home />} />
-          <Route path ='/occasions' element={<Occasions />} /> 
+          <Route path ='/occasions' element={<Occasions setFilteredBaskets = {setFilteredBaskets} />} /> 
           <Route path ='/register' element={<Register loginOut={loginOut} setLoginOut={setLoginOut} />} />
-          <Route path ='occasions/baskets' element ={<Baskets user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
+          <Route path ='occasions/baskets' element ={<Baskets filteredBaskets = {filteredBaskets} user = { user } token={token} setToken={setToken} setUsersCart={setUsersCart} usersCart={usersCart} />} />
           <Route path='/editbasket' element ={<EditBasket />} />
           <Route path ='/login' element={<Login loginOut={loginOut} setLoginOut={setLoginOut}/>} /> 
           <Route path ="/shoppingCart" element = {<ShoppingCart usersCart={usersCart} setUsersCart ={setUsersCart} />} />

@@ -70,7 +70,7 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
     }
 
 
-    const onAddClick = (basketId, basket) => {
+    const onAddClick = async(basketId, basket) => {
 
       const [addedToCart, setAddedToCart] = useState(false);
       let copyUsersCart ={...usersCart};
