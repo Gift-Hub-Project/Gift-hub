@@ -12,6 +12,7 @@ const Checkout =()=> {
       <input className="city" type ="text" placeholder="City"></input>
       <input className="state" type ="text" placeholder="State"></input>
       <input className="zip" type ="text" placeholder="Zip Code"></input>
+      <input className="message" type ="text" placeholder="Personalized Message"></input>
     </form>
     <form className="creditcard">
       <div>Credit Card</div>

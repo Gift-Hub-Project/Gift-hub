@@ -83,6 +83,17 @@
   border-style: ridge;
   border-style: none none ridge none ;
 }
+
+.message {
+  margin-top: 4;
+  width: 450px;
+  padding: 6px;
+  background: none;
+  border-color: white;
+  border-style: ridge;
+  border-style: none none ridge none ;
+}
+
 .city {
   margin-top: 4px;
   width: 450px;

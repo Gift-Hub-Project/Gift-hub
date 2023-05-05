@@ -118,9 +118,10 @@ const Baskets = ({ user, usersCart, setUsersCart, token, setToken, filteredBaske
     }  
     return (
         <div className='basketsbox'>
-            <h1 id='basketsheadline'>Baskets</h1>
+          {/* <img className='backdrop' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBprqUKchsBP1E76IROvFWP1MmQdw9UBW3ZA&usqp=CAU'/> */}
+            <h1 className='basketsheadline'>Baskets</h1>
             {filteredBaskets.map((basket) => (
-                <div key={basket.id}>
+                <div className="baskets" key={basket.id}>
                     <h2>{basket.name}</h2>
                     <p>{basket.description}</p>
                     <Link to='/shoppingcart'><button onClick={()=> onAddClick(basket.id,basket) }>Add to Cart</button></Link>

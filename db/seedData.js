@@ -37,6 +37,7 @@ const createTables = async () => {
       CREATE TABLE occasions (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255),
+        image VARCHAR(1000),
         categories VARCHAR(255)
         );
       CREATE TABLE baskets (
@@ -120,21 +121,22 @@ const createInitialCart = async () => {
     console.error("ERROR CREATING CART!")
     throw err;
   }
-}
+} 
 
 const createOccasions = async () => {
   console.log("STARTING TO CREATE CART...")
   try {
     const OccasionToCreate = [
-      { name: "For Mom", categories: ["gardening", "cooking", "self-care", "shopping", "wine"] },
-      { name: "For Dad", categories: ["grilling", "golfing", "self-care", "bourbon", "sports"] },
-      { name: "Wedding", categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
-      { name: "Baby", categories: ["diaper cake", "plush", "disney", "baby boy", "baby girl"] },
-      { name: "Teen Boy", categories: ["entertainment", "anime", "sports", "gamer", "self-care"] },
-      { name: "Teen Girl", categories: ["sports", "self-care", "entertainment", "mindfulness", "anime"] },
-      { name: "Corporate", categories: ["retirement", "thank you", "promotion", "downsizing:(", "coffee"] },
-      { name: "Grief", categories: ["mindfulness", "self-care", "comfort food", "plush", "rainbow bridge"] },
-      { name: "Graduation", categories: ["highschool", "college", "progressive", "treats and snacks", "coffee"] },
+      { name: "For Mom", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSo01nV9Z1mjxnI94vkM994nY8kWTtt8UeYA&usqp=CAU", categories: ["gardening", "cooking", "self-care", "shopping", "wine"] },
+      { name: "For Dad", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxE5hcB9OPZoDMAa-iyPKZfwhdF3I7bmhNNg&usqp=CAU", categories: ["grilling", "golfing", "self-care", "bourbon", "sports"] },
+      { name: "Wedding", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvEyIbAyxmqSmrdJJNzcJLjNIWWqCeAhj1dQ&usqp=CAU",categories: ["bridesmaides", "groomsmen", "champagne", "for him", "for her"] },
+      { name: "Baby", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm7e7SyEihJCewK4ZYCRvtuNS46B1rneAyhw&usqp=CAU", categories: ["diaper cake", "plush", "disney", "baby boy", "baby girl"] },
+      { name: "Teen Boy", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhUgf5eY17mFJ8kjePkRC3gm0IX0n2akpJgQ&usqp=CAU", categories: ["entertainment", "anime", "sports", "gamer", "self-care"] },
+      { name: "Teen Girl", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY5nF9_o21paymRbVbAAwjJ-5hCmZntywlJQ&usqp=CAU",categories: ["sports", "self-care", "entertainment", "mindfulness", "anime"] },
+      { name: "Corporate", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfKdbFCApXI4Ml6xhxhzfP-h5Rxf_F4XMMeA&usqp=CAU",categories: ["retirement", "thank you", "promotion", "downsizing:(", "coffee"] },
+      { name: "Grief", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT67bCcL5xfIuK_tWK3IuRJdgt4JQeGJbI83w&usqp=CAU", categories: ["mindfulness", "self-care", "comfort food", "plush", "rainbow bridge"] },
+      { name: "Graduation", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnguEEUBUnYw329GRiPSbLJMiHQqxJxaZYEQ&usqp=CAU", categories: ["highschool", "college", "progressive", "treats and snacks", "coffee"] },
+
 
 
     ]

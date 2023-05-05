@@ -20,7 +20,7 @@ const App = () => {
     ); //for testng, want to be an empty object
     // const [usersCart, setUsersCart] = useState([])
     const [ token, setToken ] = useState(window.localStorage.getItem("token"));
-    const [ filteredBaskets, setFilteredBaskets ] = useState([]);
+    const [ filteredBaskets, setFilteredBaskets ] = useState(JSON.parse(window.localStorage.getItem("filteredBaskets")) || []);
 
 
     useEffect (()=>{

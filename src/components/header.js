@@ -34,7 +34,6 @@ const Header =({ loginOut, setLoginOut}) => {
     const logout = () => {
         window.localStorage.getItem("token");
         setLoginOut(false);
-        //location.reload(true);
     };
 
 
