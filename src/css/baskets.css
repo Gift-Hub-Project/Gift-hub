@@ -2,13 +2,35 @@
 
 .basketsbox {
   display:flex;
-  justify-content: center;
+  flex-direction:row;
+  flex-wrap: wrap; 
+  justify-content: space-around;
   font-family:'Nunito', sans-serif;
+  background-image: url(./images/backdrop2.jpeg);
+  background-repeat: no-repeat;
+  height: 100%;
+  background-size: cover;
 }
 
-#basketsheadline {
+.basketsheadline {
  display: flex;
  justify-content: center;
+}
+
+.baskets {
+  border: inset 2.2px #f78764;
+  box-shadow: inset 2px 2px 1px #b86f52;
+  background-color:rgb(254, 254, 241);
+  width: 300px;
+  border-radius:10px;
+  height: fit-content;
+  padding:5px;
+  display:flex;
+  margin: 8px;
+  flex-direction: column;
+  align-items: left;
+  text-align: center;
+  justify-content: space-around;
 }
 
 

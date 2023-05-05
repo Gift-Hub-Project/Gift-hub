@@ -4,7 +4,7 @@ const client = require('./client.js');
 const getAllOccasions = async() => {
   try{
     const { rows } = await client.query(`
-    SELECT id, name, categories
+    SELECT id, name, image, categories
     FROM occasions;
     `);
 
@@ -42,17 +42,14 @@ const getOccasionById = async (id) => {
   }
 }
 
-
-
-
-const createOccasion = async ({ name, categories }) => {
+const createOccasion = async ({ name, image, categories }) => {
   if (!name) { return }
   try {
       const { rows: [occasion] } = await client.query(`
-    INSERT INTO occasions("name", "categories")
-    VALUES($1, $2)
+    INSERT INTO occasions("name", "image", "categories")
+    VALUES($1, $2, $3)
     RETURNING *;
-  `, [name, categories])
+  `, [name, image, categories])
       return occasion;
   } catch (err) {
       console.log(err);

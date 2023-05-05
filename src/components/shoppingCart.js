@@ -68,7 +68,7 @@ const ShoppingCart = ({usersCart, setUsersCart}) => {
     </div>
   );
 
-
+  
 };
 
 
