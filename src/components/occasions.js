@@ -44,7 +44,7 @@ const onClickHandler = (occasionId) => {
     <h1 id="headline">Shop By Occasion</h1>
   {
     occasions.map((occasions, index) => {
-      console.log("OCCASIONS", occasions);
+
       return (
       <div className="occasion" key={index}>
         
