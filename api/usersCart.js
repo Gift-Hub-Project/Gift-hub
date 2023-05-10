@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireUser } = require('./utils');
-const { createCart, createGuestCart } = require('../db/usersCart');
+const { createCart, createGuestCart, getCartById } = require('../db/usersCart');
 const {
   addItemToCart,
   getCartContent,
@@ -13,8 +13,16 @@ const { getBasketById } = require('../db');
 const router = express.Router();
 require('dotenv').config();
 
+router.get('/getCartByUserId', requireUser, async (req, res, ) => {
+  const  userId  = req.user.id
+  try {c
+   const { id }= await getCartById(userId)
+    res.send({ message: "Got cartId", id})
+  } catch(error){
+    console.error(error);
+  }
+}) 
 
-//GET /api/usersCart/:cartId   -display user cart content
 router.get('/:cartId', async (req, res) => {
   const { cartId } = req.params;
   try {
@@ -29,13 +37,12 @@ router.get('/:cartId', async (req, res) => {
   }
 });
 
-//POST /api/userscart/ route to create a new cart
 router.post('/', requireUser, async (req, res) => {
   try {
     let cart = {}
     if (req.user) {
       cart = await createCart(true, req.user.id, false);
-    } else { //we need logic for guest cart, no userId on a guest
+    } else { 
       await createCart(false, 0, false);
     }
     res.send(cart)
@@ -44,7 +51,6 @@ router.post('/', requireUser, async (req, res) => {
   }
 })
 
-//DELETE /api/usersCart/removeItem - removes item from cart
 router.delete('/removeItem/:cartId/:basketId', async (req, res) => {
   const basketId = req.params.basketId;
   const cartId = req.params.cartId;
@@ -56,7 +62,6 @@ router.delete('/removeItem/:cartId/:basketId', async (req, res) => {
   }
 });
 
-//POST /api/usersCart/addItem - adds item to cart
 router.post('/addItem/:cartId/:basketId', async (req, res, next) => {
   const basketId = req.params.basketId;
   const cartId = req.params.cartId;
@@ -68,7 +73,6 @@ router.post('/addItem/:cartId/:basketId', async (req, res, next) => {
   }
 })
 
-//PATCH /api/usersCart/updateItem - adds item in existing cart
 router.patch('/updateAddItem/:cartId/:basketId', async (req, res, next) => {
   const basketId = req.params.basketId;
   const cartId = req.params.cartId;
@@ -80,7 +84,6 @@ router.patch('/updateAddItem/:cartId/:basketId', async (req, res, next) => {
   }
 })
 
-//PATCH /api/usersCart/updateItem - removes item in existing cart
 router.patch('/updateRemoveItem/:cartId/:basketId', async (req, res, next) => {
   const basketId = req.params.basketId;
   const cartId = req.params.cartId;
@@ -93,7 +96,6 @@ router.patch('/updateRemoveItem/:cartId/:basketId', async (req, res, next) => {
 
 })
 
-//PATCH /api/usersCart/updateCart -updates all columns
 router.patch('/updateCart', async (req, res, next) => {
   const { numberOfItems, cartId, basketId } = req.body
   try {
@@ -104,7 +106,6 @@ router.patch('/updateCart', async (req, res, next) => {
   }
 })
 
-//POST /api/usersCart/createNewCart - create cart for guest user (no userId)
 router.post('/createGuestCart', async (req, res, next) => {
   const { isLoggedIn, isPurchased } = req.body
   try {

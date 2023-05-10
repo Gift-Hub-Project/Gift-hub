@@ -21,7 +21,7 @@ const dropTables = async () => {
 }
 
 const createTables = async () => {
-  try { //moved numberof items to cart_basket, 
+  try { 
     console.log("STARTING TO BUILD TABLES...")
     await client.query(`
       CREATE TABLE users(
@@ -79,7 +79,7 @@ const createInitialUsers = async () => {
   console.log("STARTING TO CREATE USERS...")
   try {
     const usersToCreate = [
-      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com", isAdmin: true, isLoggedIn: true },
+      { username: "mike", password: "mike22", address: "Next to Wendy's dumpster", email: "mike@behindwendys.com", isAdmin: true },
       { username: "alice", password: "alicat7", address: "wonderland", email: "alice@wonderland.com", isAdmin: false },
       { username: "bob", password: "bobert007", address: "County lock up", email: "bob@cell4.com", isAdmin: false },
     ]
@@ -107,7 +107,7 @@ const createInitialCart = async () => {
     ]
     const cart = await Promise.all(cartToCreate.map((value) => {
 
-      return createCart( //took out value.numberOfItems and items
+      return createCart( 
         value.isLoggedIn,
         value.userId,
         value.isPurchased

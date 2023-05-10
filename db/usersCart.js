@@ -48,19 +48,17 @@ const getAllCarts = async (isPurchased, userId) => {
   }
 }
 
-const getCartById = async (cartId) => {
+const getCartById = async (userId) => {
   try {
     const { rows: [cart] } = await client.query(`
     SELECT *
     FROM cart
-    WHERE "cartId"=$1
-    RETURNING *;
-    `, [cartId])
+    WHERE "userId"=$1;
+    `, [userId])
     return cart;
   } catch (error) {
     console.error(error);
   }
-
 }
 
 const createGuestCart = async (
